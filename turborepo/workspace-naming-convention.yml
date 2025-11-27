@@ -1,0 +1,24 @@
+# ================================================================
+# Turborepo Workspace Naming Convention
+# ================================================================
+# Ensures consistent naming patterns for workspace packages
+# ================================================================
+
+id: workspace-naming-convention
+language: json
+message: |
+  Workspace package names should follow a consistent convention:
+  - Use lowercase
+  - Use hyphens for multi-word names
+  - Consider using scopes (e.g., @wts/package-name)
+severity: hint
+note: Consider using consistent naming convention for workspace packages
+
+rule:
+  kind: string
+  regex: '[A-Z_]'
+  inside:
+    kind: pair
+    has:
+      kind: string
+      regex: "^name$"

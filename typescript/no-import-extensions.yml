@@ -1,0 +1,23 @@
+id: no-import-extensions
+language: typescript
+message: Import statements should not include file extensions (.ts, .js)
+severity: error
+note: Remove the file extension from the import path
+
+rule:
+  kind: string
+  pattern: '"$PATH"'
+  regex: '\.(ts|js|tsx|jsx)"$'
+  inside:
+    any:
+      - kind: import_statement
+      - kind: export_statement
+
+transform:
+  CLEAN_PATH:
+    replace:
+      source: $PATH
+      replace: '\.(ts|js|tsx|jsx)$'
+      by: ''
+
+fix: '"$CLEAN_PATH"'

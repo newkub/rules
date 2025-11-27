@@ -1,0 +1,39 @@
+# ================================================================
+# Utils Test Coverage Reminder
+# ================================================================
+# 
+# NOTE: ast-grep cannot check file structure directly
+# (cannot verify if each file has a corresponding .test.ts file)
+#
+# This rule detects all .ts files in utils/ directories
+# and reminds developers to add corresponding test files
+# Excludes: index.ts and .test.ts files
+# ================================================================
+
+id: utils-should-have-tests
+language: typescript
+message: |
+  All .ts files in utils/ directory must have corresponding .test.ts file.
+  Exception: index.ts does not require tests.
+  
+  NOTE: ast-grep cannot verify test file existence automatically.
+  Consider running a custom script to check test coverage.
+severity: hint
+note: Add a .test.ts file with the same name to test this utility function
+
+files:
+  - "**/utils/**/*.ts"
+
+ignores:
+  - "**/utils/**/*.ts"
+
+rule:
+  any:
+    - kind: export_statement
+      has:
+        kind: function_declaration
+    - kind: export_statement
+      has:
+        kind: lexical_declaration
+        has:
+          kind: arrow_function
