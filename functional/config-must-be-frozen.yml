@@ -1,0 +1,19 @@
+id: config-must-be-frozen
+language: typescript
+severity: error
+message: config/ ต้องใช้ Object.freeze และ as const
+note: |-
+  config/ folder ควร:
+  - ใช้ Object.freeze() wrap ค่า config
+  - ใช้ as const
+  - ใช้ satisfies สำหรับ type checking
+  - import จาก types/ และ constant/ เท่านั้น
+  
+  ตัวอย่างที่ถูกต้อง:
+  const cfg = { color: 'blue', width: 80 } as const satisfies DisplayConfig
+  export const defaultDisplayConfig = Object.freeze(cfg)
+rule:
+  pattern: "export const $NAME = $VALUE"
+  not:
+    has:
+      pattern: "Object.freeze($$$)"

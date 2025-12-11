@@ -1,0 +1,35 @@
+id: functional-naming-conventions
+language: typescript
+severity: info
+message: ควรตั้งชื่อไฟล์ตาม naming conventions
+note: |-
+  Naming Conventions:
+  
+  Files:
+  - components/ → PascalCase.ts (Button.ts, Panel.ts)
+  - types/ → kebab-case.ts (display.ts, input.ts)
+  - utils/ → kebab-case.ts (string-helper.ts, array-utils.ts)
+  - config/ → kebab-case.config.ts (theme.config.ts)
+  - constant/ → kebab-case.const.ts (color.const.ts)
+  - services/ → kebab-case.service.ts (logger.service.ts)
+  - lib/ → kebab-case.lib.ts (picocolors.lib.ts)
+  
+  Variables/Functions:
+  - constants → UPPER_SNAKE_CASE
+  - functions → camelCase
+  - classes/types → PascalCase
+  - schemas → PascalCaseSchema
+  
+  ตัวอย่าง:
+  export const DEFAULT_WIDTH = 80
+  export const processUsers = (users) => ...
+  export const ColorSchema = Schema.Literal(...)
+  export type Color = Schema.Schema.Type<typeof ColorSchema>
+rule:
+  any:
+    # UPPER_SNAKE_CASE for constants
+    - pattern: "export const $NAME = $VALUE"
+      regex: '^[a-z]'
+    # camelCase for functions in utils
+    - pattern: "export const $NAME = ($$$) => $$$"
+      regex: '^[A-Z]'

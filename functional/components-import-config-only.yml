@@ -1,0 +1,21 @@
+id: components-import-config-only
+language: typescript
+severity: error
+message: components/ ต้อง import จาก config/ เท่านั้น ห้าม import types/ ตรง
+note: |-
+  components/ folder ควร:
+  - import จาก config/ เท่านั้น
+  - ห้าม import types/ โดยตรง
+  - เป็น pure functions
+  - ไม่มี side effects
+  
+  Data Flow: types/ → config/ → components/
+  
+  ตัวอย่างที่ถูกต้อง:
+  import { defaultDisplayConfig } from '../config/display.config.js'
+  
+  ตัวอย่างที่ผิด:
+  import type { DisplayConfig } from '../types/display.js'
+rule:
+  pattern: import $$$from '$PATH'
+  regex: 'types/'

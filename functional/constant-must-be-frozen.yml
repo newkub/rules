@@ -1,0 +1,22 @@
+id: constant-must-be-frozen
+language: typescript
+severity: warning
+message: constant/ ควรใช้ Object.freeze และ as const
+note: |-
+  constant/ folder ควร:
+  - ใช้ Object.freeze() สำหรับ objects/arrays
+  - ใช้ as const สำหรับ literal values
+  - ตั้งชื่อแบบ UPPER_SNAKE_CASE
+  - ห้าม export mutable values
+  
+  ตัวอย่างที่ถูกต้อง:
+  export const COLORS = Object.freeze(['red', 'green', 'blue'] as const)
+  export const DEFAULT_WIDTH = 80 as const
+rule:
+  pattern: "export const $NAME = $VALUE"
+  not:
+    any:
+      - has:
+          pattern: "Object.freeze($$$)"
+      - has:
+          pattern: "$$$as const"

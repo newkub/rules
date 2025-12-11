@@ -1,0 +1,24 @@
+id: types-use-effect-schema
+language: typescript
+severity: info
+message: types/ ควรใช้ Effect Schema สำหรับ runtime validation
+note: |-
+  types/ folder ควร:
+  - ใช้ Schema.Struct/Array/Union/Literal จาก @effect/schema
+  - derive types จาก Schema.Schema.Type<T>
+  - ใช้ branded types
+  - ใช้ Schema.decodeUnknown สำหรับ validation
+  
+  ตัวอย่างที่ถูกต้อง:
+  export const ColorSchema = Schema.Literal('red', 'green', 'blue')
+  export const ConfigSchema = Schema.Struct({
+    color: ColorSchema,
+    width: Schema.Number
+  })
+  export type Color = Schema.Schema.Type<typeof ColorSchema>
+  export type Config = Schema.Schema.Type<typeof ConfigSchema>
+rule:
+  pattern: "export type $NAME = $TYPE"
+  not:
+    has:
+      pattern: "Schema.Schema.Type<$$$>"

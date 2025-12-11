@@ -1,0 +1,25 @@
+id: lib-no-side-effects
+language: typescript
+severity: error
+message: lib/ ห้ามมี side effects ให้ wrap third-party libraries เท่านั้น
+note: |-
+  lib/ folder ควร:
+  - wrap third-party libraries (picocolors, clack)
+  - re-export เฉพาะที่จำเป็น
+  - type-safe interfaces
+  - ห้ามมี side effects (ใช้ services/ แทน)
+  
+  ตัวอย่างที่ถูกต้อง:
+  import pc from 'picocolors'
+  export const colors = {
+    red: (text: string) => pc.red(text),
+    green: (text: string) => pc.green(text)
+  } as const
+rule:
+  any:
+    # ห้าม console
+    - pattern: "console.$METHOD($$$)"
+    # ห้าม process
+    - pattern: "process.$$$"
+    # ห้าม Effect.run
+    - pattern: "Effect.run$METHOD($$$)"

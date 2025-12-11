@@ -1,0 +1,23 @@
+id: no-any-type
+language: typescript
+severity: error
+message: ห้ามใช้ any type ในทุก folder
+note: |-
+  ห้ามใช้ any type เพราะ:
+  - ทำให้สูญเสีย type safety
+  - ควรใช้ unknown แทน
+  - ควรใช้ generics
+  - ควรใช้ union types
+  
+  ตัวอย่างที่ถูกต้อง:
+  function process<T>(value: T): T { return value }
+  function parse(input: unknown): Result { ... }
+rule:
+  any:
+    # ห้าม any ใน parameter
+    - pattern: "($NAME: any) => $$$"
+    # ห้าม any ใน return type
+    - pattern: "function $NAME($$$): any"
+    # ห้าม any ใน variable
+    - pattern: "const $NAME: any = $$$"
+    - pattern: "let $NAME: any = $$$"

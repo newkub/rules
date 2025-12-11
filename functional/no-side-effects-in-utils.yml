@@ -1,0 +1,25 @@
+id: no-side-effects-in-utils
+language: typescript
+severity: error
+message: utils/ ต้องเป็น pure functions เท่านั้น ห้ามมี side effects
+note: |-
+  utils/ folder ควรมีเฉพาะ pure functions:
+  - ห้ามใช้ console.log, console.error
+  - ห้ามใช้ process.exit, process.env
+  - ห้าม mutate input parameters
+  - ห้ามมี global state
+  - ห้ามใช้ Effect-TS (ใช้ใน services/ แทน)
+  
+  ตัวอย่างที่ถูกต้อง:
+  export const processUsers = (users: readonly User[]) => 
+    R.pipe(users, R.filter(u => u.age >= 18), R.map(u => ({...u, name: u.name.toUpperCase()})))
+rule:
+  any:
+    # ห้าม console.log/error/warn
+    - pattern: "console.$METHOD($$$)"
+    # ห้าม process.exit
+    - pattern: "process.exit($$$)"
+    # ห้าม process.env (ใช้ใน config แทน)
+    - pattern: "process.env.$$$"
+    # ห้ามใช้ Effect (ใช้ใน services)
+    - pattern: "Effect.$METHOD($$$)"

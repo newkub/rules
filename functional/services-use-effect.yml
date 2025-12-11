@@ -1,0 +1,23 @@
+id: services-use-effect
+language: typescript
+severity: warning
+message: services/ ควรใช้ Effect-TS สำหรับ side effects
+note: |-
+  services/ folder ควร:
+  - ใช้ Effect<A, E, R> สำหรับ side effects
+  - ใช้ Layer สำหรับ dependency injection
+  - ไม่ควรมี business logic
+  - ห้าม run Effect ตรง (ทำที่ app.ts)
+  
+  ตัวอย่างที่ถูกต้อง:
+  class LogError extends Error { readonly _tag = 'LogError' }
+  interface LoggerService {
+    readonly log: (m: string) => Effect.Effect<void, LogError>
+  }
+  const LoggerService = Context.GenericTag<LoggerService>('LoggerService')
+  export const LoggerServiceLive = Layer.effect(LoggerService, makeLogger)
+rule:
+  any:
+    # ห้าม Effect.runPromise/runSync ใน services
+    - pattern: "Effect.runPromise($$$)"
+    - pattern: "Effect.runSync($$$)"
