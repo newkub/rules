@@ -1,0 +1,41 @@
+id: utils-multiple-functions
+language: typescript
+severity: info
+message: ไฟล์ utils.ts มีหลาย function ควรแยกเป็น folder utils/ แทน
+note: |-
+  เมื่อไฟล์ utils.ts มี exported function มากกว่า 1 function ควร:
+  
+  1. สร้าง folder utils/
+  2. แยก function แต่ละตัวออกเป็นไฟล์ย่อย เช่น:
+     - utils/string.utils.ts
+     - utils/array.utils.ts
+     - utils/number.utils.ts
+  3. สร้าง utils/index.ts เพื่อ re-export
+  
+  ตัวอย่าง:
+  
+  ❌ ไม่ควร (utils.ts):
+  export function formatString(str: string) { ... }
+  export function parseNumber(num: string) { ... }
+  export function filterArray(arr: any[]) { ... }
+  
+  ✅ ควร:
+  utils/
+    ├── string.utils.ts  → export function formatString
+    ├── number.utils.ts  → export function parseNumber
+    ├── array.utils.ts   → export function filterArray
+    └── index.ts         → export * from './string.utils'
+                         → export * from './number.utils'
+                         → export * from './array.utils'
+  
+  เหตุผล:
+  - ง่ายต่อการหา function
+  - แยก concern ชัดเจน
+  - สามารถ import เฉพาะที่ต้องการได้
+  - ตาม functional programming best practices
+rule:
+  any:
+    # ตรวจจับ export function
+    - pattern: "export function $NAME($$$) { $$$ }"
+    # ตรวจจับ export const arrow function
+    - pattern: "export const $NAME = ($$$) => $$$"

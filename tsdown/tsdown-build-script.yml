@@ -1,0 +1,47 @@
+id: tsdown-build-script
+language: json
+severity: error
+message: build script ต้องใช้ tsdown พร้อม flags ที่แนะนำ
+note: |-
+  build script ควรใช้ tsdown พร้อม flags:
+  - --exports: สร้าง exports field
+  - --dts: สร้าง TypeScript declaration files
+  - --watch: (optional) watch mode สำหรับ development
+  
+  ตัวอย่างที่แนะนำ:
+  {
+    "scripts": {
+      "build": "tsdown --watch --exports --dts"
+    }
+  }
+  
+  หรือแยก watch mode:
+  {
+    "scripts": {
+      "build": "tsdown --exports --dts",
+      "build:watch": "tsdown --watch --exports --dts"
+    }
+  }
+rule:
+  kind: document
+  has:
+    kind: object
+    has:
+      kind: pair
+      all:
+        - has:
+            field: key
+            regex: '^"scripts"$'
+        - has:
+            field: value
+            has:
+              kind: object
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"build"$'
+                  - has:
+                      field: value
+                      regex: 'tsdown'

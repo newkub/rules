@@ -1,0 +1,35 @@
+id: tsdown-in-devdeps
+language: json
+severity: error
+message: package.json ต้องมี tsdown ใน devDependencies
+note: |-
+  tsdown เป็น TypeScript bundler ที่ต้องติดตั้งใน devDependencies
+  
+  ตัวอย่างที่ถูกต้อง:
+  {
+    "devDependencies": {
+      "tsdown": "^0.15.11"
+    }
+  }
+  
+  การติดตั้ง:
+  bun add -d tsdown
+rule:
+  kind: document
+  has:
+    kind: object
+    has:
+      kind: pair
+      all:
+        - has:
+            field: key
+            regex: '^"devDependencies"$'
+        - has:
+            field: value
+            has:
+              kind: object
+              has:
+                kind: pair
+                has:
+                  field: key
+                  regex: '^"tsdown"$'

@@ -1,0 +1,11 @@
+ruleDirs:
+  - ../functional
+  - ../package-json
+  - ../tsconfig
+  - ../tsdown
+  - ../turborepo
+  - ../utils
+  - ../workspace
+  - ../composables
+  - ../release-it
+  - ../vue-components

@@ -1,0 +1,46 @@
+id: tsdown-recommended-flags
+language: json
+severity: warning
+message: build script ควรใช้ flags --exports และ --dts
+note: |-
+  แนะนำให้ใช้ flags สำหรับ tsdown:
+  
+  Recommended flags:
+  - --exports: auto-generate exports field ใน package.json
+  - --dts: generate TypeScript declaration files (.d.ts)
+  - --watch: watch mode for development (optional)
+  
+  ตัวอย่าง:
+  "build": "tsdown --exports --dts"
+  "build:watch": "tsdown --watch --exports --dts"
+  
+  ประโยชน์:
+  - --exports: ทำให้ package รองรับ ESM/CJS
+  - --dts: สร้าง type definitions สำหรับ TypeScript users
+rule:
+  kind: document
+  has:
+    kind: object
+    has:
+      kind: pair
+      all:
+        - has:
+            field: key
+            regex: '^"scripts"$'
+        - has:
+            field: value
+            has:
+              kind: object
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"build"$'
+                  - has:
+                      field: value
+                      regex: 'tsdown'
+                  - not:
+                      has:
+                        field: value
+                        regex: '--exports.*--dts|--dts.*--exports'

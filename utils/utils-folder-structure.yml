@@ -1,0 +1,40 @@
+id: utils-folder-structure
+language: typescript
+severity: warning
+message: folder utils/ ควรมีไฟล์ index.ts เพื่อ re-export
+note: |-
+  เมื่อมี folder utils/ ที่มีหลายไฟล์ ควรมี index.ts เพื่อ:
+  
+  1. Re-export ทุก utility function
+  2. ทำให้ import ง่ายขึ้น
+  3. ซ่อน internal implementation
+  
+  ตัวอย่าง utils/index.ts:
+  
+  export * from './string.utils';
+  export * from './number.utils';
+  export * from './array.utils';
+  export * from './format.utils';
+  export * from './validation.utils';
+  
+  การใช้งาน:
+  
+  ❌ ไม่ควร:
+  import { formatString } from '@/utils/string.utils';
+  import { parseNumber } from '@/utils/number.utils';
+  
+  ✅ ควร:
+  import { formatString, parseNumber } from '@/utils';
+  
+  หรือ:
+  import * as utils from '@/utils';
+  
+  utils.formatString(...)
+  utils.parseNumber(...)
+
+# Rule นี้ต้องใช้ร่วมกับการตรวจสอบว่ามี index.ts ใน utils folder หรือไม่
+# (จะใช้ manual check หรือ custom script)
+rule:
+  any:
+    - pattern: "export * from '$PATH'"
+    - pattern: "export { $$$ } from '$PATH'"

@@ -1,0 +1,31 @@
+id: package-json-types-deps
+language: json
+severity: info
+message: ตรวจสอบว่า dependencies ที่ต้องการ types ได้ติดตั้ง @types/* แล้ว
+note: |-
+  dependencies ที่ควรมี @types/* ใน devDependencies:
+  - react → @types/react
+  - node packages → @types/node  
+  - bun → @types/bun
+  
+  และควรกำหนดใน tsconfig.json:
+  {
+    "compilerOptions": {
+      "types": ["node", "bun", "react"]
+    }
+  }
+rule:
+  kind: pair
+  all:
+    - has:
+        field: key
+        regex: '^"dependencies"$'
+    - has:
+        field: value
+        kind: object
+        has:
+          kind: pair
+          all:
+            - has:
+                field: key
+                regex: '^"react"$'

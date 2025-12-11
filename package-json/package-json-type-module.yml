@@ -1,0 +1,42 @@
+id: package-json-type-module
+language: json
+severity: error
+message: package.json ต้องกำหนด "type" เป็น "module" เพื่อใช้ ES modules
+note: |-
+  เพิ่ม:
+  "type": "module"
+  
+  เพื่อบอก Node.js/Bun ว่าใช้ ES modules (import/export) แทน CommonJS (require)
+rule:
+  kind: document
+  has:
+    kind: object
+    all:
+      # ต้องมี name field (เพื่อยืนยันว่าเป็น package.json)
+      - has:
+          kind: pair
+          all:
+            - has:
+                field: key
+                regex: '^"name"$'
+      # ตรวจสอบ type field
+      - any:
+          # ไม่มี type field
+          - not:
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"type"$'
+          # มี type แต่ไม่ใช่ "module"
+          - has:
+              kind: pair
+              all:
+                - has:
+                    field: key
+                    regex: '^"type"$'
+                - has:
+                    field: value
+                    not:
+                      regex: '^"module"$'

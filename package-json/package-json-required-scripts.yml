@@ -1,0 +1,80 @@
+id: package-json-required-scripts
+language: json
+severity: warning
+message: package.json ควรมี scripts ครบ (dev, build, lint, format, scan, test, update:deps, review)
+note: |-
+  scripts ที่ต้องมี:
+  - "dev": เริ่ม dev server
+  - "build": build project
+  - "lint": lint code
+  - "format": format code
+  - "scan": "bunx sg scan"
+  - "test": run tests
+  - "update:deps": "bunx taze -r -w && ni"
+  - "review": "bun update:deps && bun format && bun lint && bun test"
+rule:
+  kind: pair
+  all:
+    - has:
+        field: key
+        regex: '^"scripts"$'
+    - has:
+        field: value
+        kind: object
+        any:
+          - not:
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"dev"$'
+          - not:
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"build"$'
+          - not:
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"lint"$'
+          - not:
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"format"$'
+          - not:
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"test"$'
+          - not:
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"update:deps"$'
+          - not:
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"scan"$'
+          - not:
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"review"$'

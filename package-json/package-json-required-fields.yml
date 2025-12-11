@@ -1,0 +1,41 @@
+id: package-json-required-fields
+language: json
+severity: error
+message: package.json ต้องมี fields ที่จำเป็น (name, type, scripts)
+note: |-
+  package.json ควรมี fields เหล่านี้เป็นอย่างน้อย:
+  - name
+  - type: "module"
+  - scripts: dev, build, lint, format, test, update:deps, review
+  
+  หมายเหตุ: packageManager ให้กำหนดที่ root workspace เท่านั้น
+rule:
+  kind: document
+  has:
+    kind: object
+    all:
+      # ต้องมี name field
+      - has:
+          kind: pair
+          all:
+            - has:
+                field: key
+                regex: '^"name"$'
+      # ตรวจสอบ type และ scripts
+      - any:
+          # ไม่มี type field
+          - not:
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"type"$'
+          # ไม่มี scripts field
+          - not:
+              has:
+                kind: pair
+                all:
+                  - has:
+                      field: key
+                      regex: '^"scripts"$'

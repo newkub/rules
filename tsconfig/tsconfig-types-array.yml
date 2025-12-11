@@ -1,0 +1,31 @@
+id: tsconfig-types-array
+language: json
+severity: info
+message: tsconfig.json ควรกำหนด compilerOptions.types สำหรับ @types/* ที่ติดตั้ง
+note: |-
+  ถ้าติดตั้ง @types/* ใน devDependencies ควรกำหนดใน:
+  {
+    "compilerOptions": {
+      "types": ["node", "bun", "react"]
+    }
+  }
+  
+  เพื่อให้ TypeScript รู้จัก types ที่ใช้งาน
+rule:
+  kind: object
+  has:
+    kind: pair
+    all:
+      - has:
+          field: key
+          regex: '^"compilerOptions"$'
+      - has:
+          field: value
+          kind: object
+          not:
+            has:
+              kind: pair
+              all:
+                - has:
+                    field: key
+                    regex: '^"types"$'

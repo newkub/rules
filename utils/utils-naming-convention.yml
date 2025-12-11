@@ -1,0 +1,52 @@
+id: utils-naming-convention
+language: typescript
+severity: info
+message: ไฟล์ใน utils/ ควรตั้งชื่อตามรูปแบบ <category>.utils.ts
+note: |-
+  ไฟล์ utility ควรตั้งชื่อตามรูปแบบ:
+  <category>.utils.ts
+  
+  โดยที่ <category> คือหมวดหมู่ของ function เช่น:
+  
+  ✅ ชื่อที่ดี:
+  - string.utils.ts    → string manipulation functions
+  - array.utils.ts     → array helper functions
+  - date.utils.ts      → date formatting/parsing
+  - format.utils.ts    → general formatting functions
+  - validation.utils.ts → validation functions
+  - fuzzy.utils.ts     → fuzzy search/match functions
+  - color.utils.ts     → color manipulation
+  - number.utils.ts    → number operations
+  
+  ❌ ชื่อที่ไม่ดี:
+  - helpers.ts         → ไม่ชัดเจนว่ามีอะไร
+  - common.ts          → ไม่บอกประเภท
+  - tools.ts           → คลุมเครือ
+  - misc.ts            → miscellaneous ไม่ควรมี
+  
+  แนวทาง:
+  1. ใช้ชื่อที่บอกหมวดหมู่ชัดเจน
+  2. ต้องลงท้ายด้วย .utils.ts
+  3. ไม่ควรมี utils.ts โดดๆ (ควรแยกเป็น folder)
+  4. แต่ละไฟล์ควรมี related functions เท่านั้น
+  
+  ตัวอย่างการจัดกลุ่ม:
+  
+  utils/
+    ├── string.utils.ts
+    │   ├── capitalize
+    │   ├── truncate
+    │   └── slugify
+    ├── array.utils.ts
+    │   ├── chunk
+    │   ├── unique
+    │   └── flatten
+    ├── validation.utils.ts
+    │   ├── isEmail
+    │   ├── isUrl
+    │   └── isPhoneNumber
+    └── index.ts
+
+# Rule นี้เป็นแค่ documentation - การตรวจสอบชื่อไฟล์ควรทำด้วย linter อื่น
+rule:
+  pattern: "export function $NAME($$$) { $$$ }"

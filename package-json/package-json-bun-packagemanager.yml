@@ -1,0 +1,22 @@
+id: package-json-bun-packagemanager
+language: json
+severity: warning
+message: packageManager ควรใช้ bun@3.1.0 หรือสูงกว่า
+note: |-
+  ตั้งค่า packageManager ให้เป็น:
+  "packageManager": "bun@3.1.0"
+  
+  เพื่อให้แน่ใจว่าทุกคนใช้ bun version เดียวกัน
+rule:
+  kind: pair
+  has:
+    field: key
+    regex: '^"packageManager"$'
+  any:
+    - not:
+        has:
+          field: value
+          regex: '^"bun@'
+    - has:
+        field: value
+        regex: '^"bun@[012]\.'

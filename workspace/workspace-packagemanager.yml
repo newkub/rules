@@ -1,0 +1,36 @@
+id: workspace-packagemanager
+language: json
+severity: error
+message: Root workspace ต้องกำหนด packageManager
+note: |-
+  Root workspace (ที่มี workspaces หรือ workspace field) ต้องมี:
+  "packageManager": "bun@3.1.0"
+  
+  เพื่อให้ทุกคนใช้ bun version เดียวกัน
+rule:
+  kind: document
+  has:
+    kind: object
+    all:
+      # มี workspaces หรือ workspace field
+      - any:
+          - has:
+              kind: pair
+              all:
+                - has:
+                    field: key
+                    regex: '^"workspaces"$'
+          - has:
+              kind: pair
+              all:
+                - has:
+                    field: key
+                    regex: '^"workspace"$'
+      # แต่ไม่มี packageManager
+      - not:
+          has:
+            kind: pair
+            all:
+              - has:
+                  field: key
+                  regex: '^"packageManager"$'
