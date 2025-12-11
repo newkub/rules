@@ -1,0 +1,55 @@
+id: turbo-json-required
+language: json
+severity: error
+message: ต้องมีไฟล์ turbo.json ใน root พร้อม schema และ tasks
+note: |-
+  turbo.json ต้องมีโครงสร้างดังนี้:
+  - $schema: สำหรับ JSON schema validation
+  - ui: "tui" (แนะนำให้ใช้ tui mode)
+  - tasks: กำหนด tasks ที่ตรงกับ scripts
+  
+  ตัวอย่างที่ถูกต้อง:
+  {
+    "$schema": "https://turbo.build/schema.json",
+    "ui": "tui",
+    "tasks": {
+      "build": {
+        "dependsOn": ["^build"],
+        "outputs": ["dist/**"]
+      },
+      "dev": {
+        "cache": false,
+        "persistent": true
+      },
+      "lint": {},
+      "format": {},
+      "test": {}
+    }
+  }
+rule:
+  kind: document
+  has:
+    kind: object
+    all:
+      # ต้องมี $schema
+      - has:
+          kind: pair
+          has:
+            field: key
+            regex: '^\"\$schema\"$'
+      # ต้องมี ui
+      - has:
+          kind: pair
+          all:
+            - has:
+                field: key
+                regex: '^"ui"$'
+            - has:
+                field: value
+                regex: 'tui'
+      # ต้องมี tasks
+      - has:
+          kind: pair
+          has:
+            field: key
+            regex: '^"tasks"$'

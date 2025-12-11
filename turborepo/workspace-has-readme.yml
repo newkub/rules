@@ -1,0 +1,46 @@
+id: workspace-has-readme
+language: json
+severity: warning
+message: แต่ละ workspace ควรมี README.md
+note: |-
+  แต่ละ workspace ควรมี README.md ที่อธิบาย:
+  - Introduction พร้อม features (with emoji)
+  - Design Principles (with emoji)
+  - Installation (npm, pnpm, yarn, bun)
+  - Usage examples
+  - Examples
+  - License (MIT)
+  
+  ดูรายละเอียดเพิ่มเติมที่ /follow-readme
+  
+  Template:
+  # 📦 Package Name
+  
+  ## ✨ Features
+  - Feature 1
+  
+  ## 📦 Installation
+  | Package Manager | Command |
+  |----------------|---------|
+  | bun | `bun add package-name` |
+  
+  ## 🚀 Usage
+  ```typescript
+  import { feature } from 'package-name'
+  ```
+  
+  ## 📄 License
+  MIT License
+rule:
+  # Note: ไม่สามารถตรวจสอบว่ามี README.md ได้จาก package.json
+  # rule นี้เป็นแค่ reminder
+  kind: document
+  has:
+    kind: object
+    # workspace package (ไม่มี workspaces field)
+    not:
+      has:
+        kind: pair
+        has:
+          field: key
+          regex: '^"workspaces"$'

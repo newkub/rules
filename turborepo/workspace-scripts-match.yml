@@ -1,0 +1,72 @@
+id: workspace-scripts-match
+language: json
+severity: warning
+message: Workspace package.json ควรมี scripts ที่ตรงกับ root
+note: |-
+  Workspace package.json ควรมี scripts ที่ตรงกับ root package.json
+  โดยใช้ bun run แทน turbo
+  
+  ตัวอย่าง root scripts:
+  {
+    "scripts": {
+      "build": "turbo build",
+      "dev": "turbo dev",
+      "lint": "turbo lint",
+      "format": "turbo review",
+      "test": "turbo test"
+    }
+  }
+  
+  Workspace ควรมี scripts:
+  {
+    "scripts": {
+      "build": "tsdown --exports --dts",
+      "dev": "bun run --watch src/index.ts",
+      "lint": "bunx tsc --noEmit && biome lint --write",
+      "format": "biome format --write",
+      "test": "bun run vitest"
+    }
+  }
+  
+  สังเกต: workspace ใช้ bun run ไม่ใช้ turbo
+rule:
+  kind: document
+  has:
+    kind: object
+    all:
+      # ไม่มี workspaces (ไม่ใช่ root)
+      - not:
+          has:
+            kind: pair
+            has:
+              field: key
+              regex: '^"workspaces"$'
+      # ต้องมี scripts
+      - has:
+          kind: pair
+          all:
+            - has:
+                field: key
+                regex: '^"scripts"$'
+            - has:
+                field: value
+                kind: object
+                all:
+                  # ต้องมี build
+                  - has:
+                      kind: pair
+                      has:
+                        field: key
+                        regex: '^"build"$'
+                  # ต้องมี dev
+                  - has:
+                      kind: pair
+                      has:
+                        field: key
+                        regex: '^"dev"$'
+                  # ต้องมี lint
+                  - has:
+                      kind: pair
+                      has:
+                        field: key
+                        regex: '^"lint"$'

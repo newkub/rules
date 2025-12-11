@@ -1,0 +1,54 @@
+id: root-turbo-scripts
+language: json
+severity: error
+message: Root package.json ต้องมี scripts ที่ใช้ turbo
+note: |-
+  Root package.json ใน monorepo ต้องมี scripts ที่ใช้ turbo:
+  - build: "turbo build"
+  - dev: "turbo dev"
+  - lint: "turbo lint"
+  - format: "turbo format" (หรือ "turbo review")
+  - test: "turbo test"
+  
+  ตัวอย่างที่ถูกต้อง:
+  {
+    "scripts": {
+      "build": "turbo build",
+      "dev": "turbo dev",
+      "lint": "turbo lint",
+      "format": "turbo review",
+      "test": "turbo test"
+    }
+  }
+rule:
+  kind: document
+  has:
+    kind: object
+    all:
+      # ต้องมี workspaces (เป็น root monorepo)
+      - has:
+          kind: pair
+          has:
+            field: key
+            regex: '^"workspaces"$'
+      # ต้องมี scripts
+      - has:
+          kind: pair
+          all:
+            - has:
+                field: key
+                regex: '^"scripts"$'
+            - has:
+                field: value
+                kind: object
+                all:
+                  # ต้องมี build script ที่ใช้ turbo
+                  - has:
+                      kind: pair
+                      all:
+                        - has:
+                            field: key
+                            regex: '^"build"$'
+                        - has:
+                            field: value
+                            regex: 'turbo'
