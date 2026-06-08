@@ -6,9 +6,9 @@
  * top level are surfaced as the category `"(root)"`.
  */
 import { dirname, relative } from "node:path";
-import type { Rule } from "./types.ts";
-import { categoryFromPath, existsSync, isDir, walkYaml } from "./utils/fs.ts";
-import { normalizeLanguage, normalizeSeverity, readRuleYaml } from "./utils/yaml.ts";
+import type { Rule } from "../types.ts";
+import { categoryFromPath, existsSync, isDir, walkYaml } from "../utils/fs.ts";
+import { normalizeLanguage, normalizeSeverity, readRuleYaml } from "../utils/yaml.ts";
 
 /**
  * Load every rule under `rulesDir` and return them in a stable order.
@@ -70,7 +70,7 @@ export async function loadRules(rulesDir: string): Promise<Rule[]> {
 	}
 
 	if (errors.length > 0) {
-		const { logger } = await import("./utils/logger.ts");
+		const { logger } = await import("../utils/logger.ts");
 		for (const e of errors) {
 			const rel = relative(rulesDir, e.path);
 			logger.warn(`[loader] ${rel}: ${e.error}`);

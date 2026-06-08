@@ -1,13 +1,13 @@
 /**
- * `agent-rules enable` — patch the project's `agent-rules.config.ts` (or
- * `package.json#agentRules`) to enable specific rules or categories.
+ * `rules enable` — patch the project's `rules.config.ts` (or
+ * `package.json#rules`) to enable specific rules or categories.
  */
 import type { Command } from "cac";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { logger } from "../../utils/logger.ts";
-import { listCategories } from "../../loader.ts";
-import { bundledRulesDir } from "../../config.ts";
+import { listCategories } from "../../core/loader.ts";
+import { bundledRulesDir } from "../../core/config.ts";
 
 export interface EnableCommandOptions {
 	cwd: string;
@@ -17,10 +17,10 @@ export interface EnableCommandOptions {
 }
 
 const CONFIG_NAMES = [
-	"agent-rules.config.ts",
-	"agent-rules.config.mts",
-	"agent-rules.config.js",
-	"agent-rules.config.mjs",
+	"rules.config.ts",
+	"rules.config.mts",
+	"rules.config.js",
+	"rules.config.mjs",
 ];
 
 /** Find the first existing config file in the cwd. */
@@ -46,15 +46,15 @@ function patchTsConfig(path: string, key: string, additions: string[]): void {
 	writeFileSync(path, next);
 }
 
-/** Patch a `package.json#agentRules` block to add a key. */
+/** Patch a `package.json#rules` block to add a key. */
 function patchPackageJson(cwd: string, key: string, additions: string[]): void {
 	const p = join(cwd, "package.json");
 	const json = JSON.parse(readFileSync(p, "utf8")) as Record<string, unknown>;
-	const ar = (json.agentRules as Record<string, unknown> | undefined) ?? {};
-	const existing = (ar[key] as unknown[] | undefined) ?? [];
+	const rulesConfig = (json.rules as Record<string, unknown> | undefined) ?? {};
+	const existing = (rulesConfig[key] as unknown[] | undefined) ?? [];
 	const merged = Array.from(new Set([...existing, ...additions]));
-	ar[key] = merged;
-	json.agentRules = ar;
+	rulesConfig[key] = merged;
+	json.rules = rulesConfig;
 	writeFileSync(p, JSON.stringify(json, null, 2) + "\n");
 }
 
@@ -73,7 +73,7 @@ export function registerEnable(cli: Command): void {
 			} else if (items.length > 0) {
 				additions = items;
 			} else {
-				logger.error("usage: agent-rules enable <rule-or-category> [...] or --all");
+				logger.error("usage: rules enable <rule-or-category> [...] or --all");
 				process.exitCode = 1;
 				return;
 			}

@@ -5,7 +5,7 @@
 import { existsSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import type { PluginConfig, Severity } from "./types.ts";
+import type { PluginConfig, Severity } from "../types.ts";
 
 /** Default severity that fails a build / scan. */
 export const DEFAULT_FAIL_ON: Severity = "error";
@@ -46,8 +46,8 @@ export function findProjectRoot(start: string): string {
  */
 export function bundledRulesDir(): string {
 	const here = fileURLToPath(import.meta.url);
-	// Package root is always 2 levels up from src/
-	const pkgRoot = resolve(here, "..", "..");
+	// Find package root by walking up to find package.json
+	const pkgRoot = findProjectRoot(here);
 	const candidates = [
 		resolve(pkgRoot, "dist", "rules"),
 		resolve(pkgRoot, "rules"),

@@ -6,7 +6,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import type { Command } from "cac";
-import { installSkill } from "../../skill.ts";
+import { installSkill } from "../../core/skill.ts";
 import { logger } from "../../utils/logger.ts";
 
 export interface InitCommandOptions {
@@ -17,36 +17,36 @@ export interface InitCommandOptions {
 }
 
 const CONFIG_TEMPLATE = `import { defineConfig } from "vite";
-import { agentRules } from "rules";
+import { rulesPlugin } from "rules";
 
 export default defineConfig({
-\tplugins: [
-\t\tagentRules({
-\t\t\t// Folder with rule sub-folders. Defaults to the bundled rules.
-\t\t\trulesDir: "./rules",
-\t\t\t// Glob patterns to include / exclude
-\t\t\tinclude: ["src/**/*.{ts,tsx,js,jsx,svelte,vue,html}"],
-\t\t\texclude: ["**/node_modules/**", "**/dist/**"],
-\t\t\t// Minimum severity that fails the build
-\t\t\tfailOn: "warning",
-\t\t\t// Run in dev mode too (default: build-only)
-\t\t\trunOnDev: false,
-\t\t\t// Enable only specific categories (whitelist)
-\t\t\tenabledCategories: ["security", "svelte", "seo"],
-\t\t\t// Or disable specific rules
-\t\t\tdisabledRules: ["general-no-todo-comments"],
-\t\t}),
-\t],
+	plugins: [
+		rulesPlugin({
+			// Folder with rule sub-folders. Defaults to the bundled rules.
+			rulesDir: "./rules",
+			// Glob patterns to include / exclude
+			include: ["src/**/*.{ts,tsx,js,jsx,svelte,vue,html}"],
+			exclude: ["**/node_modules/**", "**/dist/**"],
+			// Minimum severity that fails the build
+			failOn: "warning",
+			// Run in dev mode too (default: build-only)
+			runOnDev: false,
+			// Enable only specific categories (whitelist)
+			enabledCategories: ["security", "svelte", "seo"],
+			// Or disable specific rules
+			disabledRules: ["general-no-todo-comments"],
+		}),
+	],
 });
 `;
 
-const AGENT_RULES_CONFIG_TEMPLATE = `import type { PluginConfig } from "rules";
+const RULES_CONFIG_TEMPLATE = `import type { PluginConfig } from "rules";
 
 const config: PluginConfig = {
-\trulesDir: "./rules",
-\tinclude: ["src/**/*.{ts,tsx,js,jsx,svelte,vue,html}"],
-\texclude: ["**/node_modules/**", "**/dist/**"],
-\tfailOn: "warning",
+	rulesDir: "./rules",
+	include: ["src/**/*.{ts,tsx,js,jsx,svelte,vue,html}"],
+	exclude: ["**/node_modules/**", "**/dist/**"],
+	failOn: "warning",
 };
 
 export default config;
@@ -74,8 +74,8 @@ export function registerInit(cli: Command): void {
 
 			if (!options.noConfig) {
 				writeIfMissing(
-					join(cwd, "agent-rules.config.ts"),
-					AGENT_RULES_CONFIG_TEMPLATE,
+					join(cwd, "rules.config.ts"),
+					RULES_CONFIG_TEMPLATE,
 					options.force ?? false,
 				);
 				writeIfMissing(join(cwd, "vite.config.ts"), CONFIG_TEMPLATE, options.force ?? false);

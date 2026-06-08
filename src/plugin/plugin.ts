@@ -5,10 +5,11 @@
  */
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { findProjectRoot, resolveConfig, severityFails } from "./config.ts";
-import { renderFindings, scan } from "./scanner.ts";
-import type { Finding, PluginConfig } from "./types.ts";
-import { logger } from "./utils/logger.ts";
+import { findProjectRoot, resolveConfig, severityFails } from "../core/config.ts";
+import { renderFindings } from "../core/formatter.ts";
+import { scan } from "../core/scanner.ts";
+import type { Finding, PluginConfig } from "../types.ts";
+import { logger } from "../utils/logger.ts";
 
 /** Minimal subset of the Vite plugin contract that we actually use. */
 interface VitePluginContext {
@@ -35,11 +36,11 @@ function writeReport(path: string, findings: Finding[]): void {
  * The factory that Vite users call. Example:
  *
  * ```ts
- * import { agentRules } from "rules";
- * export default defineConfig({ plugins: [agentRules({ failOn: "warning" })] });
+ * import { rulesPlugin } from "rules";
+ * export default defineConfig({ plugins: [rulesPlugin({ failOn: "warning" })] });
  * ```
  */
-export function agentRules(userConfig: PluginConfig = {}): ViteLikePlugin {
+export function rulesPlugin(userConfig: PluginConfig = {}): ViteLikePlugin {
 	let rootDir: string;
 	let resolved: ReturnType<typeof resolveConfig>;
 	let isDev: boolean;
@@ -65,7 +66,7 @@ export function agentRules(userConfig: PluginConfig = {}): ViteLikePlugin {
 			if (!shouldRun) return;
 
 			logger.info(
-				`agent-rules: scanning (${isDev ? "dev" : isSsr ? "ssr build" : "build"}) from ${rootDir}`,
+				`rules: scanning (${isDev ? "dev" : isSsr ? "ssr build" : "build"}) from ${rootDir}`,
 			);
 			const result = await scan(resolved, rootDir);
 
@@ -75,17 +76,17 @@ export function agentRules(userConfig: PluginConfig = {}): ViteLikePlugin {
 			}
 			if (resolved.reportFile) {
 				writeReport(resolved.reportFile, result.findings);
-				logger.info(`agent-rules: report written to ${resolved.reportFile}`);
+				logger.info(`rules: report written to ${resolved.reportFile}`);
 			}
 
 			const failing = result.findings.filter((f) => severityFails(f.severity, resolved.failOn));
 			if (failing.length > 0) {
-				const message = `agent-rules: ${failing.length} finding(s) at or above '${resolved.failOn}'`;
+				const message = `rules: ${failing.length} finding(s) at or above '${resolved.failOn}'`;
 				logger.error(message);
 				throw new Error(message);
 			} else {
 				logger.success(
-					`agent-rules: ${result.filesScanned} file(s) clean against ${result.rulesEvaluated} rule(s) in ${result.durationMs}ms`,
+					`rules: ${result.filesScanned} file(s) clean against ${result.rulesEvaluated} rule(s) in ${result.durationMs}ms`,
 				);
 			}
 		},
@@ -96,7 +97,7 @@ export function agentRules(userConfig: PluginConfig = {}): ViteLikePlugin {
 }
 
 /** Re-export for Vite's `defineConfig({ plugins: [...] })` ergonomics. */
-export default agentRules;
+export default rulesPlugin;
 
 /** Helper that finds the project root that contains this plugin's consumer. */
 export function projectRootFromCwd(cwd: string = process.cwd()): string {

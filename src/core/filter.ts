@@ -9,7 +9,7 @@
  *  - `disabledCategories` and `disabledRules` are *blacklists* applied after
  *    the whitelist, so a blacklisted id always wins.
  */
-import type { PluginConfig, Rule } from "./types.ts";
+import type { PluginConfig, Rule } from "../types.ts";
 
 export function filterRules(rules: Rule[], cfg: PluginConfig): Rule[] {
 	const enabledCats = new Set(cfg.enabledCategories ?? []);

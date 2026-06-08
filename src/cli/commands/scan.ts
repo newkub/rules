@@ -1,10 +1,11 @@
 /**
- * `agent-rules scan` — runs a scan and exits non-zero when findings exceed
+ * `rules scan` — runs a scan and exits non-zero when findings exceed
  * the configured `failOn` threshold.
  */
 import type { Command } from "cac";
-import { resolveConfig, severityFails } from "../../config.ts";
-import { renderFindings, scan } from "../../scanner.ts";
+import { resolveConfig, severityFails } from "../../core/config.ts";
+import { renderFindings } from "../../core/formatter.ts";
+import { scan } from "../../core/scanner.ts";
 import { loadConfig, severityFromString } from "../config-loader.ts";
 import { logger } from "../../utils/logger.ts";
 import { writeFileSync } from "node:fs";

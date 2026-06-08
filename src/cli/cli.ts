@@ -11,13 +11,13 @@
  *   rules help      Show help.
  */
 import { cac } from "cac";
-import { registerDisable } from "./cli/commands/disable.ts";
-import { registerEnable } from "./cli/commands/enable.ts";
-import { registerInit } from "./cli/commands/init.ts";
-import { registerList } from "./cli/commands/list.ts";
-import { registerScan } from "./cli/commands/scan.ts";
-import { registerSkill } from "./cli/commands/skill.ts";
-import { logger } from "./utils/logger.ts";
+import { registerDisable } from "./commands/disable.ts";
+import { registerEnable } from "./commands/enable.ts";
+import { registerInit } from "./commands/init.ts";
+import { registerList } from "./commands/list.ts";
+import { registerScan } from "./commands/scan.ts";
+import { registerSkill } from "./commands/skill.ts";
+import { logger } from "../utils/logger.ts";
 
 async function main(): Promise<number> {
 	const cli = cac("rules");
@@ -49,7 +49,7 @@ async function main(): Promise<number> {
 // VERSION is injected at build time by tsdown; fallback for dev.
 const VERSION =
 	(typeof globalThis !== "undefined" && (globalThis as { __VERSION?: string }).__VERSION__) ||
-	process.env.AGENT_RULES_VERSION ||
+	process.env.RULES_VERSION ||
 	"0.1.0";
 
 const code = await main();

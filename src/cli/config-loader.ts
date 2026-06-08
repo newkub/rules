@@ -3,8 +3,8 @@
  *
  * Looks for (in order):
  *   1. `--config <path>` argument
- *   2. `agent-rules.config.ts` / `agent-rules.config.js` in the project root
- *   3. `agent-rules` key in the consumer's `package.json`
+ *   2. `rules.config.ts` / `rules.config.js` in the project root
+ *   3. `rules` key in the consumer's `package.json`
  *
  * Returns the resolved {@link PluginConfig} merged with the CLI overrides
  * for `rulesDir` / `include` / `exclude` / `failOn` / `enabled`.
@@ -12,7 +12,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { isAbsolute, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import type { PluginConfig, Severity } from "../types.ts";
+import type { PluginConfig, Severity } from "../../types.ts";
 
 export interface LoadedConfig {
 	config: PluginConfig;
@@ -20,25 +20,25 @@ export interface LoadedConfig {
 }
 
 const CONFIG_FILENAMES = [
-	"agent-rules.config.ts",
-	"agent-rules.config.mts",
-	"agent-rules.config.js",
-	"agent-rules.config.mjs",
-	"agent-rules.config.cjs",
-	"agent-rules.config.json",
+	"rules.config.ts",
+	"rules.config.mts",
+	"rules.config.js",
+	"rules.config.mjs",
+	"rules.config.cjs",
+	"rules.config.json",
 ];
 
 async function loadConfigFile(path: string): Promise<PluginConfig> {
 	if (path.endsWith(".json")) {
 		const raw = readFileSync(path, "utf8");
-		return (JSON.parse(raw) as { agentRules?: PluginConfig }).agentRules ?? {};
+		return (JSON.parse(raw) as { rules?: PluginConfig }).rules ?? {};
 	}
 	// Dynamic import works for .ts, .js, .mjs, .cjs (when transpiled).
 	const mod = (await import(pathToFileURL(resolve(path)).href)) as {
 		default?: PluginConfig;
-		agentRules?: PluginConfig;
+		rules?: PluginConfig;
 	};
-	return (mod.default ?? mod.agentRules ?? {}) as PluginConfig;
+	return (mod.default ?? mod.rules ?? {}) as PluginConfig;
 }
 
 function readPackageJsonConfig(cwd: string): PluginConfig | null {
@@ -46,9 +46,9 @@ function readPackageJsonConfig(cwd: string): PluginConfig | null {
 	if (!existsSync(pkgPath)) return null;
 	try {
 		const pkg = JSON.parse(readFileSync(pkgPath, "utf8")) as {
-			agentRules?: PluginConfig;
+			rules?: PluginConfig;
 		};
-		return pkg.agentRules ?? null;
+		return pkg.rules ?? null;
 	} catch {
 		return null;
 	}
@@ -69,7 +69,7 @@ export async function loadConfig(
 	if (configPath) {
 		const abs = isAbsolute(configPath) ? configPath : resolve(cwd, configPath);
 		if (!existsSync(abs)) {
-			throw new Error(`agent-rules: --config file does not exist: ${abs}`);
+			throw new Error(`rules: --config file does not exist: ${abs}`);
 		}
 		config = await loadConfigFile(abs);
 		resolvedPath = abs;

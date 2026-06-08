@@ -1,8 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { scan, pickFailure, renderFindings } from "../src/scanner.ts";
-import { severityFails } from "../src/config.ts";
+import { scan } from "../src/core/scanner.ts";
+import { pickFailure } from "../src/core/formatter.ts";
+import { renderFindings } from "../src/core/formatter.ts";
+import { severityFails } from "../src/core/config.ts";
 
 const ROOT = join(import.meta.dir, "_fixture");
 const RULES_DIR = join(ROOT, "rules");

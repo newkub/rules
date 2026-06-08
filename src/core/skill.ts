@@ -8,13 +8,24 @@ import { existsSync, readFileSync } from "node:fs";
 import { copyFile, mkdir, readdir, stat } from "node:fs/promises";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ensureDir, existsSync as pathExists } from "./utils/fs.ts";
+import { ensureDir, existsSync as pathExists } from "../utils/fs.ts";
 
 export interface SkillInstallOptions {
 	/** Where the consumer wants the skill folder to live. */
 	targetDir: string;
 	/** If `true`, overwrite an existing installation. */
 	force?: boolean;
+}
+
+/** Find the package root by walking up to find package.json. */
+function findProjectRoot(start: string): string {
+	const { existsSync } = require("node:fs");
+	let dir = resolve(start);
+	while (dir !== resolve(dir, "..")) {
+		if (existsSync(resolve(dir, "package.json"))) return dir;
+		dir = resolve(dir, "..");
+	}
+	return resolve(start);
 }
 
 /**
@@ -26,8 +37,8 @@ export interface SkillInstallOptions {
  */
 export function bundledSkillDir(): string {
 	const here = fileURLToPath(import.meta.url);
-	// The package root is always 2 levels up from src/
-	const pkgRoot = resolve(here, "..", "..");
+	// Find package root by walking up to find package.json
+	const pkgRoot = findProjectRoot(here);
 	const candidates = [
 		resolve(pkgRoot, "dist", "skill"),
 		resolve(pkgRoot, "skills"),
@@ -59,13 +70,13 @@ async function copyRecursive(src: string, dest: string): Promise<void> {
 
 /**
  * Install the agent skill into `targetDir` (which should be the parent folder
- * — the skill is placed at `<targetDir>/agent-rules/`).
+ * — the skill is placed at `<targetDir>/rules/`).
  */
 export async function installSkill(options: SkillInstallOptions): Promise<string> {
-	// bundledSkillDir() returns the `skills/` parent; we need the `agent-rules/`
+	// bundledSkillDir() returns the `skills/` parent; we need the `rules/`
 	// sub-folder inside it.
-	const src = resolve(bundledSkillDir(), "agent-rules");
-	const dest = resolve(options.targetDir, "agent-rules");
+	const src = resolve(bundledSkillDir(), "rules");
+	const dest = resolve(options.targetDir, "rules");
 	await ensureDir(options.targetDir);
 	if (existsSync(dest) && !options.force) {
 		throw new Error(
@@ -84,7 +95,7 @@ export function readBundledSkill(): string {
 
 /** Path of every file installed by {@link installSkill}, relative to the target. */
 export async function listSkillFiles(targetDir: string): Promise<string[]> {
-	const root = resolve(targetDir, "agent-rules");
+	const root = resolve(targetDir, "rules");
 	if (!existsSync(root)) return [];
 	const out: string[] = [];
 	const stack: string[] = [root];

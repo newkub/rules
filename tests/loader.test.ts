@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
 import { join } from "node:path";
-import { bundledRulesDir } from "../src/config.ts";
-import { filterRules } from "../src/filter.ts";
-import { groupByCategory, listCategories, loadRules } from "../src/loader.ts";
+import { bundledRulesDir } from "../src/core/config.ts";
+import { filterRules } from "../src/core/filter.ts";
+import { groupByCategory, listCategories, loadRules } from "../src/core/loader.ts";
 
 describe("loader", () => {
 	test("loads every YAML rule in the bundled rules directory", async () => {

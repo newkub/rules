@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { bundledSkillDir, installSkill, listSkillFiles } from "../src/skill.ts";
+import { bundledSkillDir, installSkill, listSkillFiles } from "../src/core/skill.ts";
 
 describe("skill", () => {
 	test("bundled skill dir contains a SKILL.md", () => {
@@ -11,21 +11,21 @@ describe("skill", () => {
 	});
 
 	test("install copies files into the target dir", async () => {
-		const cwd = mkdtempSync(join(tmpdir(), "agent-rules-test-"));
+		const cwd = mkdtempSync(join(tmpdir(), "rules-test-"));
 		try {
 			const target = join(cwd, ".agents/skills");
 			const dest = await installSkill({ targetDir: target });
 			const files = await listSkillFiles(target);
 			expect(files.length).toBeGreaterThan(0);
 			expect(files.some((f) => f.endsWith("SKILL.md"))).toBe(true);
-			expect(dest.endsWith("agent-rules")).toBe(true);
+			expect(dest.endsWith("rules")).toBe(true);
 		} finally {
 			rmSync(cwd, { recursive: true, force: true });
 		}
 	});
 
 	test("install refuses to overwrite without --force", async () => {
-		const cwd = mkdtempSync(join(tmpdir(), "agent-rules-test-"));
+		const cwd = mkdtempSync(join(tmpdir(), "rules-test-"));
 		try {
 			const target = join(cwd, ".agents/skills");
 			await installSkill({ targetDir: target });

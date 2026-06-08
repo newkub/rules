@@ -29,11 +29,11 @@ npm install -D rules
 ```ts
 // vite.config.ts
 import { defineConfig } from "vite";
-import { agentRules } from "rules";
+import { rulesPlugin } from "rules";
 
 export default defineConfig({
   plugins: [
-    agentRules({
+    rulesPlugin({
       // Optional: point at your own rules. Defaults to the bundled rules.
       // rulesDir: "./rules",
       include: ["src/**/*.{ts,tsx,js,jsx,svelte,vue,html}"],
@@ -75,12 +75,12 @@ bunx rules skill uninstall
 
 ## Configuration
 
-You can keep config in `agent-rules.config.ts` (recommended) or in the
-`agentRules` key of `package.json`. The CLI / Vite plugin will pick it up
+You can keep config in `rules.config.ts` (recommended) or in the
+`rules` key of `package.json`. The CLI / Vite plugin will pick it up
 automatically.
 
 ```ts
-// agent-rules.config.ts
+// rules.config.ts
 import type { PluginConfig } from "rules";
 
 const config: PluginConfig = {
@@ -154,9 +154,9 @@ YAML schema for authoring new rules.
 
 ```ts
 import {
-  agentRules,        // Vite plugin factory
-  loadRules,         // parse rules from a folder
-  scan,              // run a full scan
+  rulesPlugin,     // Vite plugin factory
+  loadRules,        // parse rules from a folder
+  scan,             // run a full scan
   filterRules,       // apply whitelist/blacklist
   renderFindings,    // format findings for a terminal
   installSkill,      // install the agent skill

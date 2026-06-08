@@ -1,13 +1,13 @@
 /**
  * `rules disable` — patch the project's config to disable rules or
- * categories. Operates on `agent-rules.config.ts` or `package.json`.
+ * categories. Operates on `rules.config.ts` or `package.json`.
  */
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Command } from "cac";
-import { bundledRulesDir } from "../../config.ts";
-import { listCategories } from "../../loader.ts";
+import { bundledRulesDir } from "../../core/config.ts";
+import { listCategories } from "../../core/loader.ts";
 import { logger } from "../../utils/logger.ts";
 
 export interface DisableCommandOptions {
@@ -17,10 +17,10 @@ export interface DisableCommandOptions {
 }
 
 const CONFIG_NAMES = [
-	"agent-rules.config.ts",
-	"agent-rules.config.mts",
-	"agent-rules.config.js",
-	"agent-rules.config.mjs",
+	"rules.config.ts",
+	"rules.config.mts",
+	"rules.config.js",
+	"rules.config.mjs",
 ];
 
 function locateConfig(cwd: string): string | undefined {
@@ -61,11 +61,11 @@ function patchTsConfig(path: string, key: string, additions: string[]): void {
 function patchPackageJson(cwd: string, key: string, additions: string[]): void {
 	const p = join(cwd, "package.json");
 	const json = JSON.parse(readFileSync(p, "utf8")) as Record<string, unknown>;
-	const ar = (json.agentRules as Record<string, unknown> | undefined) ?? {};
-	const existing = (ar[key] as unknown[] | undefined) ?? [];
+	const rulesConfig = (json.rules as Record<string, unknown> | undefined) ?? {};
+	const existing = (rulesConfig[key] as unknown[] | undefined) ?? [];
 	const merged = Array.from(new Set([...existing, ...additions]));
-	ar[key] = merged;
-	json.agentRules = ar;
+	rulesConfig[key] = merged;
+	json.rules = rulesConfig;
 	writeFileSync(p, JSON.stringify(json, null, 2) + "\n");
 }
 

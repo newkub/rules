@@ -1,11 +1,11 @@
 /**
- * `agent-rules skill` — install or uninstall the agent-skill folder.
+ * `rules skill` — install or uninstall the agent-skill folder.
  */
 import type { Command } from "cac";
 import { rmSync } from "node:fs";
 import { resolve } from "node:path";
 import { existsSync } from "node:fs";
-import { installSkill, listSkillFiles } from "../../skill.ts";
+import { installSkill, listSkillFiles } from "../../core/skill.ts";
 import { logger } from "../../utils/logger.ts";
 
 export interface SkillCommandOptions {
@@ -16,7 +16,7 @@ export interface SkillCommandOptions {
 
 export function registerSkill(cli: Command): void {
 	cli
-		.command("skill [action]", "Install or uninstall the agent-rules skill")
+		.command("skill [action]", "Install or uninstall the rules skill")
 		.option("--target <dir>", "parent directory for the skill (default: <cwd>/.agents/skills)")
 		.option("--force", "overwrite an existing installation")
 		.action(async (action: string | undefined, options: SkillCommandOptions) => {
@@ -34,7 +34,7 @@ export function registerSkill(cli: Command): void {
 			}
 
 			if (action === "uninstall") {
-				const dest = resolve(target, "agent-rules");
+				const dest = resolve(target, "rules");
 				if (!existsSync(dest)) {
 					logger.warn(`no skill found at ${dest}`);
 					return;

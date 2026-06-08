@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { join } from "node:path";
-import { bundledRulesDir, findProjectRoot, resolveConfig, severityFails } from "../src/config.ts";
+import { bundledRulesDir, findProjectRoot, resolveConfig, severityFails } from "../src/core/config.ts";
 
 describe("config", () => {
 	test("resolveConfig fills sensible defaults", () => {

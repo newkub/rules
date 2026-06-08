@@ -1,9 +1,9 @@
 /**
- * `agent-rules list` — list bundled rules and categories.
+ * `rules list` — list bundled rules and categories.
  */
 import type { Command } from "cac";
-import { bundledRulesDir } from "../../config.ts";
-import { formatRuleLine, groupByCategory, listCategories, loadRules } from "../../loader.ts";
+import { bundledRulesDir } from "../../core/config.ts";
+import { formatRuleLine, groupByCategory, listCategories, loadRules } from "../../core/loader.ts";
 import { logger } from "../../utils/logger.ts";
 
 export interface ListCommandOptions {
@@ -52,7 +52,7 @@ export function registerList(cli: Command): void {
 				return;
 			}
 
-			logger.banner(`agent-rules · ${filtered.length} rules · ${categories.length} categories`);
+			logger.banner(`rules · ${filtered.length} rules · ${categories.length} categories`);
 			if (options.category) {
 				for (const r of filtered) console.log(`  ${formatRuleLine(r)}`);
 				return;
