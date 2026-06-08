@@ -1,0 +1,18 @@
+id: rust-no-print-in-test
+language: Rust
+message: Avoid println!() in tests - let the assertion fail with a structured panic message instead
+severity: hint
+rule:
+  kind: macro_invocation
+  any:
+    - pattern: "println!($X)"
+    - pattern: "eprintln!($X)"
+    - pattern: "dbg!($X)"
+  inside:
+    kind: function_item
+    regex: "#\\[test\\]"
+    stopBy: end
+note: |
+  println debugging in tests pollutes cargo test output. Use
+  assert_eq! or panics with structured values, or remove the
+  test in favor of a proper integration test.

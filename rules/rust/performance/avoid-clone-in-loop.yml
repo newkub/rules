@@ -1,0 +1,14 @@
+id: rust-avoid-clone-in-loop
+language: Rust
+message: Avoid .clone() inside a loop - extract reusable references or restructure
+severity: warning
+rule:
+  kind: expression_statement
+  pattern: "$X.clone()"
+  inside:
+    kind: for_expression
+    stopBy: end
+note: |
+  Cloning in a loop usually means you're fighting the borrow
+  checker. Restructure to keep references alive across
+  iterations, or use Cow<'_, T> for conditional ownership.

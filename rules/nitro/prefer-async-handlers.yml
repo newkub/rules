@@ -1,0 +1,11 @@
+id: nitro-prefer-async-handlers
+language: TypeScript
+message: Nitro handlers should be async functions, not Promise-returning sync functions
+severity: hint
+rule:
+  kind: function_declaration
+  regex: "export\\s+function\\s+(GET|POST|PUT|PATCH|DELETE)"
+note: |
+  async function GET() { await ... } is the idiomatic shape.
+  Sync handlers that return Promises work but don't let
+  Sentry/lefthook pick up the rejected promise cleanly.

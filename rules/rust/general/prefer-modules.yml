@@ -1,0 +1,11 @@
+id: rust-prefer-modules
+language: Rust
+message: Group related items into a module (mod foo { ... }) or a separate file
+severity: hint
+rule:
+  kind: source_file
+  regex: "^\\s*struct\\s+|^\\s*fn\\s+|^\\s*impl\\s+"
+note: |
+  A source file with many top-level items becomes hard to
+  navigate. Group related items into modules / sub-modules
+  and split large modules into separate files.

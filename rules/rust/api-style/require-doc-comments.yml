@@ -1,0 +1,16 @@
+id: rust-require-doc-comments
+language: Rust
+message: Public items should have /// doc comments
+severity: hint
+rule:
+  kind: function_item
+  regex: "pub\\s+(?:async\\s+)?fn\\s+[A-Z]\\w*"
+  not:
+    has:
+      kind: line_comment
+      regex: "^\\s*///"
+      stopBy: end
+note: |
+  Missing_docs lint already enforces this, but a project-wide
+  rule helps authors remember before the build breaks. The
+  /// comment becomes rustdoc output.

@@ -1,0 +1,11 @@
+id: rust-prefer-slice-patterns
+language: Rust
+message: Match against slice patterns [&T] to avoid allocations from .as_ref()/.to_vec()
+severity: hint
+rule:
+  kind: match_expression
+  regex: "match\\s+\\w+\\.as_ref\\(\\)\\s*\\{"
+note: |
+  Idiomatic Rust uses match against &str/&[T] with literal
+  patterns instead of converting to owned values. Reduces
+  allocation and improves clarity.

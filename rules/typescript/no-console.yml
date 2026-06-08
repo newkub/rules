@@ -1,0 +1,7 @@
+id: no-console-log
+language: TypeScript
+message: Remove console.log statements before production
+severity: warning
+rule:
+  kind: call_expression
+  pattern: "console.log($ARG)"

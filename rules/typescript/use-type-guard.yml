@@ -1,0 +1,6 @@
+id: use-type-guard
+language: TypeScript
+message: Consider using type guard functions for narrowing union types
+severity: hint
+rule:
+  kind: type_alias_declaration

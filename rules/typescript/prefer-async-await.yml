@@ -1,0 +1,7 @@
+id: prefer-async-await
+language: TypeScript
+message: Use async/await instead of .then() chains
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "$X.then($Y)"

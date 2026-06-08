@@ -1,0 +1,15 @@
+id: rust-require-error-trait
+language: Rust
+message: Custom error enums should derive thiserror::Error and implement std::error::Error
+severity: warning
+rule:
+  pattern: "enum $NAME { $$$ }"
+  regex: "enum\\s+\\w+Error\\s*\\{"
+  not:
+    has:
+      kind: attribute
+      regex: "derive.*Error|thiserror"
+      stopBy: end
+note: |
+  Deriving thiserror::Error gives you Display, Error, and
+  From impls for free. Hand-rolled Error impls are bug-prone.

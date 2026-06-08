@@ -1,0 +1,11 @@
+id: rust-prefer-result-test
+language: Rust
+message: Test functions should return Result<(), E> for ?-style assertions, instead of panicking on Err
+severity: hint
+rule:
+  kind: function_item
+  regex: "#\\[test\\]\\s*\\n\\s*fn\\s+\\w+[^{]*->\\s*Result"
+note: |
+  Tests returning Result<T, E> let you use ? for setup and
+  assertions, producing a structured error chain on failure
+  instead of a generic panic.

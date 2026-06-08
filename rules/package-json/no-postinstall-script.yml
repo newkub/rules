@@ -1,0 +1,15 @@
+id: package-json-no-postinstall-script
+language: Json
+message: Avoid "postinstall" scripts in package.json - they run arbitrary code on every install
+severity: warning
+rule:
+  kind: property
+  regex: "\"scripts\""
+  has:
+    kind: property
+    regex: "\"postinstall\"|\"preinstall\"|\"install\""
+    stopBy: end
+note: |
+  install scripts run on every developer machine and CI
+  worker. They are a common supply-chain attack vector.
+  Prefer native binaries published as separate packages.

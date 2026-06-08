@@ -1,0 +1,11 @@
+id: rust-no-unwrap-chain
+language: Rust
+message: Avoid .unwrap().unwrap() chains - hard to read, panics on the first failure
+severity: warning
+rule:
+  kind: call_expression
+  pattern: "$X.unwrap().unwrap()"
+note: |
+  Chained .unwrap() calls obscure which call actually failed.
+  Use ? operator, .expect("reason"), or refactor the chain so
+  the failure modes are explicit.

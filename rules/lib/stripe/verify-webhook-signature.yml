@@ -1,0 +1,28 @@
+id: stripe-verify-webhook-signature
+language: TypeScript
+message: Stripe webhook handlers must verify the signature with stripe.webhooks.constructEvent
+severity: error
+rule:
+  pattern: "stripe.webhooks.constructEvent($$$, $X, $Y)"
+  regex: "stripe\\.webhooks\\.constructEvent\\([^,]+,[^,]+,\\s*['\"]"
+note: |
+  The webhook secret must come from env (STRIPE_WEBHOOK_SECRET)
+  and must never be a string literal in source. Hardcoding it
+  leaks the secret and lets attackers forge events.
+---
+id: stripe-missing-webhook-verify
+language: TypeScript
+message: Webhook handler that doesn't call stripe.webhooks.constructEvent is unsafe
+severity: error
+rule:
+  kind: function_declaration
+  regex: "export\\s+(?:async\\s+)?function\\s+POST"
+  inside:
+    kind: source_file
+    regex: "/(webhook|stripe)/"
+    stopBy: end
+  not:
+    has:
+      kind: call_expression
+      pattern: "stripe.webhooks.constructEvent($$$)"
+      stopBy: end

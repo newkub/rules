@@ -1,0 +1,16 @@
+id: zod-no-coerce
+language: TypeScript
+message: Avoid using .coerce() in Zod schemas - use explicit parsing
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "$SCHEMA.coerce($ARG)"
+
+---
+id: zod-no-optional-any
+language: TypeScript
+message: Avoid optional().any() in Zod schemas
+severity: warning
+rule:
+  kind: call_expression
+  pattern: "optional().any()"

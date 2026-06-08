@@ -1,0 +1,14 @@
+id: html-no-target-blank-without-rel
+language: Html
+message: target="_blank" must include rel="noopener noreferrer"
+severity: warning
+rule:
+  kind: element
+  pattern: "<a $$$ target=$$$_blank$$$ $$$>$$$</a>"
+  not:
+    kind: attribute
+    regex: "rel=.*noopener"
+note: |
+  Without noopener, the new tab can manipulate window.opener
+  on the originating page. noreferrer additionally strips
+  the Referer header.

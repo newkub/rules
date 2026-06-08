@@ -1,0 +1,13 @@
+id: general-no-disable-csrf
+language: TypeScript
+message: Don't disable CSRF protection on state-changing endpoints
+severity: warning
+rule:
+  any:
+    - pattern: "csrf: false"
+    - pattern: "checkCsrf: false"
+    - pattern: "skipCsrf: true"
+    - pattern: "ignoreCsrf: true"
+note: |
+  Universal web security rule. Disable CSRF only for webhooks
+  that authenticate via signature verification.

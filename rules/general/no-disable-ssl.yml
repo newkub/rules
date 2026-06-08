@@ -1,0 +1,12 @@
+id: general-no-disable-ssl
+language: TypeScript
+message: Never disable TLS verification in production - opens up MITM attacks
+severity: error
+rule:
+  any:
+    - pattern: "rejectUnauthorized: false"
+    - pattern: "NODE_TLS_REJECT_UNAUTHORIZED = '0'"
+    - pattern: "verify = false"
+note: |
+  Universal transport security rule. Use a proper CA bundle
+  (NODE_EXTRA_CA_CERTS, SSL_CERT_FILE) instead of disabling checks.

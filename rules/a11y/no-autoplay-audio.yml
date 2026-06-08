@@ -1,0 +1,18 @@
+id: a11y-no-autoplay-audio
+language: Html
+message: <video autoplay> or <audio autoplay> must mute audio or be user-initiated to satisfy WCAG 1.4.2
+severity: warning
+rule:
+  kind: element
+  regex: "<(video|audio)"
+  has:
+    kind: attribute
+    regex: "autoplay"
+    stopBy: end
+  not:
+    kind: attribute
+    regex: "muted"
+note: |
+  Audio that plays automatically for more than 3 seconds must have
+  a mechanism to pause it, or be muted by default. Combine with
+  prefers-reduced-motion CSS for vestibular safety.

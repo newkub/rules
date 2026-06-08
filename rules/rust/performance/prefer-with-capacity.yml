@@ -1,0 +1,12 @@
+id: rust-prefer-with-capacity
+language: Rust
+message: Use Vec::with_capacity(n) when the final length is known
+severity: hint
+rule:
+  kind: expression_statement
+  pattern: "let mut $X = Vec::new();"
+  regex: "let\\s+mut\\s+\\w+\\s*=\\s*Vec::new\\(\\s*\\)"
+note: |
+  Vec::new() starts with zero capacity and reallocates on
+  every push. Pre-allocate when the final size is known or
+  bounded.

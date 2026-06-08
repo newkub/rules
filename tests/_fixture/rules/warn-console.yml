@@ -1,0 +1,6 @@
+id: warn-console
+language: TypeScript
+message: warn-console
+severity: warning
+rule:
+  pattern: console.log($ARG)

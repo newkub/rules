@@ -1,0 +1,10 @@
+id: security-no-http-in-production
+language: TypeScript
+message: Hardcoded http:// URLs in production code - use https://
+severity: warning
+rule:
+  pattern: "$X = $Y"
+  regex: "[\"']http://(?!localhost|127\\.0\\.0\\.1|0\\.0\\.0\\.0)[^\"']+[\"']"
+note: |
+  http:// traffic is unencrypted and can be tampered with. Allow
+  http:// only for localhost / 127.0.0.1 development URLs.

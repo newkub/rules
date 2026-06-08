@@ -1,0 +1,11 @@
+id: rust-no-unreachable
+language: Rust
+message: unreachable!() is rarely correct - if it is, add a // SAFETY / reasoning comment
+severity: warning
+rule:
+  kind: macro_invocation
+  pattern: "unreachable!($X)"
+note: |
+  unreachable!() panics if reached. Either prove the case is
+  truly unreachable with an exhaustiveness check, or use a
+  match arm that returns a typed error.

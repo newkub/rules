@@ -1,0 +1,10 @@
+id: rust-no-weak-hash
+language: Rust
+message: Avoid md5/sha1 from digest crate - use sha2/sha3/blake2 from vetted providers
+severity: error
+rule:
+  kind: identifier
+  regex: "\\b(Md5|Sha1|md5|sha1)\\b"
+note: |
+  MD5 and SHA-1 are broken. Use sha2::Sha256, sha3::Sha3_256,
+  blake2::Blake2s, or argon2/bcrypt for password hashing.

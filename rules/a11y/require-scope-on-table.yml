@@ -1,0 +1,13 @@
+id: a11y-require-scope-on-table
+language: Html
+message: <th> cells should declare scope="col" or scope="row" for assistive tech
+severity: hint
+rule:
+  kind: element
+  pattern: "<th>$$$</th>"
+  not:
+    kind: attribute
+    regex: "scope=[\"'](col|colgroup|row|rowgroup)[\"']"
+note: |
+  The scope attribute tells screen readers whether a header cell
+  applies to its column or row. Mandatory for data tables.

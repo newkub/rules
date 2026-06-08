@@ -1,0 +1,11 @@
+id: rust-no-dead-code
+language: Rust
+message: Remove dead code or annotate with #[allow(dead_code)] - silent dead code is a maintenance hazard
+severity: hint
+rule:
+  kind: attribute_item
+  regex: "#\\[allow\\(dead_code\\)\\]"
+note: |
+  #[allow(dead_code)] silences the compiler warning. Prefer
+  deleting the code; allow only with a comment explaining
+  why (e.g. "kept for public API stability").

@@ -1,0 +1,16 @@
+id: stripe-no-raw-api-version
+language: TypeScript
+message: Pin Stripe API version (apiVersion) explicitly in the Stripe client constructor
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "new Stripe($X)"
+  not:
+    has:
+      kind: property_identifier
+      regex: "apiVersion"
+      stopBy: end
+note: |
+  Without an explicit apiVersion, Stripe SDK falls back to
+  the account's default which can change. Pin a version
+  like '2024-06-20' to make webhook payload contracts stable.

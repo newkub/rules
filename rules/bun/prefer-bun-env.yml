@@ -1,0 +1,7 @@
+id: bun-use-env
+language: TypeScript
+message: Use Bun.env instead of process.env
+severity: hint
+rule:
+  kind: member_expression
+  pattern: "process.env"

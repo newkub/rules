@@ -1,0 +1,11 @@
+id: svelte-no-reactive-store-leak
+language: TypeScript
+message: Don't subscribe to stores manually with $page.store.subscribe() - use the $store auto-subscription
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "$STORE.subscribe($$$)"
+note: |
+  Manual $store.subscribe() requires manual cleanup and is
+  easy to leak. The $store auto-subscription in Svelte
+  components handles subscribe/unsubscribe for you.

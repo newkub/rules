@@ -1,0 +1,17 @@
+id: a11y-require-input-label
+language: Html
+message: Form inputs need a <label>, aria-label, or aria-labelledby
+severity: warning
+rule:
+  kind: element
+  regex: "<(input|select|textarea)"
+  not:
+    any:
+      - kind: attribute
+        regex: "aria-label=|aria-labelledby="
+      - kind: attribute
+        regex: "type=[\"'](hidden|submit|button|reset)[\"']"
+note: |
+  Form controls must have an accessible name. Use <label for="id">
+  + <input id="id">, aria-label="...", or wrap the input inside the
+  label. type="hidden" is exempt.

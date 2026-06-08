@@ -1,0 +1,11 @@
+id: rust-prefer-assert-eq
+language: Rust
+message: Use assert_eq!() for value comparisons - shows actual vs expected on failure
+severity: hint
+rule:
+  kind: macro_invocation
+  pattern: "assert!($X == $Y)"
+note: |
+  assert!(a == b) only tells you the assertion failed. Use
+  assert_eq!(a, b) to get "left: ..., right: ..." in the
+  panic message, which is much easier to debug.

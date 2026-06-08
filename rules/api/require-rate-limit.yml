@@ -1,0 +1,16 @@
+id: api-require-rate-limit
+language: TypeScript
+message: Public POST/PUT/PATCH/DELETE endpoints should declare a rate limit (Cloudflare WAF, Upstash, etc.)
+severity: warning
+rule:
+  kind: function_declaration
+  regex: "export\\s+(?:async\\s+)?function\\s+(POST|PUT|PATCH|DELETE)"
+  not:
+    has:
+      kind: call_expression
+      pattern: "rateLimit($$$)"
+      stopBy: end
+note: |
+  Without rate limiting, public endpoints are trivially DoS-able
+  or used for credential stuffing. Apply limits per-IP and per-user
+  for sensitive routes (login, signup, payment).

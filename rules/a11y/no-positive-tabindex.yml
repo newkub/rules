@@ -1,0 +1,11 @@
+id: a11y-no-positive-tabindex
+language: Html
+message: Avoid positive tabindex values - they break natural tab order
+severity: warning
+rule:
+  kind: attribute
+  regex: "tabindex=[\"'](?!0\\b|-1\\b)[1-9][0-9]*[\"']"
+note: |
+  Positive tabindex makes focus jump out of document order, which
+  confuses keyboard users and screen readers. Use 0 (natural order)
+  or -1 (programmatic focus only).

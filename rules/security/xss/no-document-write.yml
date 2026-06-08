@@ -1,0 +1,12 @@
+id: security-no-document-write
+language: TypeScript
+message: Avoid document.write - it can rewrite the page and enables XSS
+severity: error
+rule:
+  any:
+    - pattern: "document.write($$$)"
+    - pattern: "document.writeln($$$)"
+note: |
+  document.write() executes after the page is parsed, can break the
+  DOM, and is a common XSS vector. Use DOM APIs (createElement, append)
+  or a framework templating instead.

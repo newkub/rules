@@ -1,0 +1,12 @@
+id: security-no-dangerous-redirect
+language: TypeScript
+message: Avoid redirect($userInput) - validate allow-list to prevent open redirect attacks
+severity: warning
+rule:
+  any:
+    - pattern: "redirect($X)"
+    - pattern: "sendRedirect($X)"
+    - pattern: "window.location.href = $X"
+note: |
+  Unvalidated redirects can be used for phishing. Validate against an
+  allow-list of known routes or use relative paths only.

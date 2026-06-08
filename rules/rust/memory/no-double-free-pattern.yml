@@ -1,0 +1,13 @@
+id: rust-no-double-free-pattern
+language: Rust
+message: Avoid patterns that can lead to double-free (e.g. mem::ManuallyDrop + raw pointer juggling)
+severity: warning
+rule:
+  pattern: "let $X = ManuallyDrop::new($Y);"
+  inside:
+    kind: unsafe_block
+    stopBy: end
+note: |
+  ManuallyDrop combined with raw pointers is a footgun for
+  double-free. Prefer ptr::read into an owned value, or
+  extract the data with into_inner().

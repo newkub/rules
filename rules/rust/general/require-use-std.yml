@@ -1,0 +1,10 @@
+id: rust-require-use-std
+language: Rust
+message: Use absolute module paths (std::fs, tokio::spawn) for widely used items to make dependencies obvious
+severity: hint
+rule:
+  kind: use_declaration
+  regex: "^\\s*use\\s+[a-z]+\\w*::\\*"
+note: |
+  Glob imports (use foo::*) obscure where symbols come from
+  and slow down compilation. Prefer explicit imports.

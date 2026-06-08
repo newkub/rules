@@ -1,0 +1,20 @@
+id: api-require-idempotency-key
+language: TypeScript
+message: Non-idempotent POST endpoints (payment, booking creation) should accept an Idempotency-Key header
+severity: hint
+rule:
+  kind: function_declaration
+  regex: "export\\s+(?:async\\s+)?function\\s+POST"
+  inside:
+    kind: source_file
+    regex: "src/routes/api/(booking|payment|billing/checkout)"
+    stopBy: end
+  not:
+    has:
+      kind: member_expression
+      regex: "idempotency"
+      stopBy: end
+note: |
+  Idempotency keys let clients safely retry failed requests
+  without duplicating side effects. Stripe, Resend, and most
+  payment APIs require them.

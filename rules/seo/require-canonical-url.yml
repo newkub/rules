@@ -1,0 +1,14 @@
+id: seo-require-canonical-url-svelte
+language: Html
+message: Public pages should declare a canonical URL
+severity: warning
+rule:
+  kind: element
+  pattern: "<svelte:head>"
+  has:
+    kind: element
+    pattern: "<link rel=\"canonical\""
+    stopBy: end
+note: |
+  Canonical links help prevent duplicate content issues. Use the
+  SeoMeta component to manage canonical URLs from page data.

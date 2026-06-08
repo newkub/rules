@@ -1,0 +1,10 @@
+id: general-no-weak-random
+language: TypeScript
+message: Math.random is not cryptographically secure - use crypto.randomUUID() or crypto.getRandomValues()
+severity: warning
+rule:
+  pattern: "Math.random($$$)"
+note: |
+  Universal rule. Applies to Node, Bun, browser, anywhere. Use
+  crypto.randomUUID() for IDs, crypto.getRandomValues() for raw
+  bytes, or a CSPRNG library.

@@ -1,0 +1,12 @@
+id: rust-require-await-on-future
+language: Rust
+message: Futures must be awaited - returning a Future without .await compiles but does nothing
+severity: warning
+rule:
+  kind: return_expression
+  regex: "return\\s+[A-Za-z_]\\w*\\.(fetch|load|read|query)\\("
+note: |
+  Returning a future from a function is fine, but if you intend
+  to wait for the result, .await is required. This rule catches
+  the common typo where a future is returned from a non-async
+  helper.

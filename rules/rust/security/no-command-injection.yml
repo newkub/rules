@@ -1,0 +1,12 @@
+id: rust-no-command-injection
+language: Rust
+message: Avoid std::process::Command with user-controlled arguments - validate input first
+severity: error
+rule:
+  pattern: "Command::new($X)"
+  inside:
+    kind: function_item
+    stopBy: end
+note: |
+  Command::new with an unvalidated string allows shell-style
+  injection. Use Command::new("safe-binary").arg(sanitized).

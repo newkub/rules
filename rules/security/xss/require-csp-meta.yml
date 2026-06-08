@@ -1,0 +1,14 @@
+id: security-require-csp-meta
+language: Html
+message: Production pages should include a Content-Security-Policy meta tag
+severity: hint
+rule:
+  pattern: "<meta http-equiv=\"Content-Security-Policy\""
+  inside:
+    kind: element
+    pattern: "<head>"
+    stopBy: end
+note: |
+  CSP is the strongest defense in depth against XSS. The platform
+  deploys CSP via Cloudflare headers, but a meta fallback is useful
+  during local development.

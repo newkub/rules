@@ -1,0 +1,12 @@
+id: drizzle-prefer-where-eq
+language: TypeScript
+message: Use eq() / and() / or() from drizzle-orm instead of raw SQL fragments
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "where(sql.raw($$$))"
+note: |
+  Drizzle's typed query builder (eq, and, or, inArray) is
+  protected against SQL injection and gives you column type
+  checking. sql.raw(...) is reserved for genuinely dynamic
+  fragments like ORDER BY column.

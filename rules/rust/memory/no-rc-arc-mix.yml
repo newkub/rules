@@ -1,0 +1,13 @@
+id: rust-no-rc-arc-mix
+language: Rust
+message: Avoid mixing Rc<T> and Arc<T> - the conversion chain Rc -> Arc -> Rc loses Send/Sync
+severity: warning
+rule:
+  pattern: "Rc::new($X)"
+  inside:
+    kind: function_item
+    regex: "fn\\s+.*\\b(async|spawn)\\b"
+    stopBy: end
+note: |
+  Rc is not Send, so it cannot cross thread boundaries. Use
+  Arc<T> for shared ownership in async/multi-threaded code.

@@ -1,0 +1,6 @@
+id: ts-prefer-enum
+language: TypeScript
+message: Use const enum for better performance
+severity: hint
+rule:
+  kind: enum_declaration

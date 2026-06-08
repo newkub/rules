@@ -1,0 +1,15 @@
+id: no-deep-reactive
+language: TypeScript
+message: Consider shallow reactive for better performance
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "deepReactive($ARG)"
+---
+id: no-deep-reactive-tsx
+language: Tsx
+message: Consider shallow reactive for better performance
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "deepReactive($ARG)"

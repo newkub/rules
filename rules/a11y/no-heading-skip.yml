@@ -1,0 +1,17 @@
+id: a11y-no-heading-skip
+language: Html
+message: Heading levels must descend in order (h1 > h2 > h3 > ...). Skipping levels breaks the document outline.
+severity: warning
+rule:
+  pattern: "<h5>$$$</h5>"
+  inside:
+    kind: document
+    stopBy: end
+  not:
+    has:
+      kind: element
+      regex: "<h[1-4]"
+      stopBy: end
+note: |
+  Headings should never skip more than one level at a time. Helps
+  screen reader users navigate and improves SEO.

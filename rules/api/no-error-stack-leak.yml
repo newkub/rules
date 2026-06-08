@@ -1,0 +1,14 @@
+id: api-no-error-stack-leak
+language: TypeScript
+message: Don't expose error.stack to API clients - log it server-side, return a generic message
+severity: error
+rule:
+  kind: member_expression
+  regex: "error\\.stack|err\\.stack|\\.stack\\b"
+  inside:
+    kind: return_statement
+    stopBy: end
+note: |
+  Stack traces leak file paths, library versions, and internal
+  class names. Log the stack server-side; return a sanitized
+  message + error id to the client.

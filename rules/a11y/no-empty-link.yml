@@ -1,0 +1,19 @@
+id: a11y-no-empty-link
+language: Html
+message: <a> tags without text or aria-label are invisible to screen readers
+severity: error
+rule:
+  kind: element
+  pattern: "<a $$$>$$$</a>"
+  not:
+    any:
+      - has:
+          kind: element
+          stopBy: end
+      - has:
+          kind: attribute
+          regex: "aria-label=|aria-labelledby="
+          stopBy: end
+note: |
+  Empty links are a common accessibility failure. Always provide
+  visible text, an image with alt, or aria-label.

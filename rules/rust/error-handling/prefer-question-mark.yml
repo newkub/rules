@@ -1,0 +1,11 @@
+id: rust-prefer-question-mark
+language: Rust
+message: Use the `?` operator instead of match Result { Ok => ..., Err => return Err(e) }
+severity: hint
+rule:
+  kind: match_expression
+  pattern: "match $X { Ok($Y) => $Z, Err($E) => return Err($E) }"
+note: |
+  Verbose match-on-Result-with-return-Err can be replaced with
+  `let $Y = $X?;` for one-liner propagation, or `?` on the
+  expression itself.

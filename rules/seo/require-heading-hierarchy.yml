@@ -1,0 +1,18 @@
+id: seo-require-heading-hierarchy
+language: Html
+message: Heading levels must not skip (e.g. h2 -> h4) for proper document outline
+severity: hint
+rule:
+  pattern: "<h4>$$$</h4>"
+  inside:
+    kind: document
+    stopBy: end
+  not:
+    has:
+      kind: element
+      regex: "<h3"
+      stopBy: end
+note: |
+  Headings should descend in order (h1 > h2 > h3 > h4 ...). Skipping
+  levels breaks the document outline for assistive technology and
+  search engines.

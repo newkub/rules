@@ -1,0 +1,7 @@
+id: html-no-inline-event-handlers
+language: Html
+message: Avoid inline event handlers - use addEventListener instead
+severity: warning
+rule:
+  kind: attribute
+  regex: "onclick|onload|onerror|onmouseover"

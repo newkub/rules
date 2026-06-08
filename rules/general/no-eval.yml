@@ -1,0 +1,10 @@
+id: general-no-eval
+language: TypeScript
+message: eval() executes arbitrary code and is forbidden - replace with explicit logic
+severity: error
+rule:
+  kind: call_expression
+  pattern: "eval($ARG)"
+note: |
+  Universal rule: never call eval() in any language. Use a
+  purpose-built parser, JSON.parse, or a static dispatch table.

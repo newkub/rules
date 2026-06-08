@@ -1,0 +1,13 @@
+id: rust-require-error-context
+language: Rust
+message: Add context to propagated errors with .context() or .with_context() from anyhow
+severity: hint
+rule:
+  kind: expression_statement
+  pattern: "$X?"
+  not:
+    regex: "(context|with_context|map_err)"
+note: |
+  Bare `?` propagates the original error message with no
+  context. Add .context("loading config") so the resulting
+  error chain tells you where it came from.

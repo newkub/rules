@@ -1,0 +1,13 @@
+id: security-no-cookie-without-secure
+language: TypeScript
+message: Cookies should set secure: true and httpOnly: true to prevent theft
+severity: warning
+rule:
+  pattern: "cookies.set($NAME, $VALUE, $OPTS)"
+  regex: "cookies\\.set\\([^)]*\\{[^{}]*\\}"
+  not:
+    regex: "secure\\s*:\\s*true"
+note: |
+  Cookies set without secure flag are sent over plain HTTP. Set
+  secure: true, httpOnly: true, sameSite: 'lax' or 'strict' in
+  production.

@@ -1,0 +1,14 @@
+id: seo-require-hreflang
+language: Html
+message: Multi-locale pages should declare hreflang tags inside <svelte:head>
+severity: hint
+rule:
+  kind: element
+  pattern: "<svelte:head>"
+  has:
+    kind: element
+    pattern: "<link rel=\"alternate\" hreflang=\"$$$\""
+    stopBy: end
+note: |
+  hreflang signals to search engines which language/region variant
+  of a page to serve. Required for the TH/EN bilingual marketing site.

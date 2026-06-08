@@ -1,0 +1,11 @@
+id: rust-no-callback-style-async
+language: Rust
+message: Don't pass Fn callbacks into async functions - return a Future and .await it
+severity: hint
+rule:
+  kind: parameter
+  regex: "F:\\s*Fn\\(|cb:\\s*Fn\\(|callback:\\s*Fn\\("
+note: |
+  Callbacks force the caller to use channels or shared state
+  to retrieve the result. Return an async Future instead and
+  let the caller .await it.

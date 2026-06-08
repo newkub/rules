@@ -1,0 +1,11 @@
+id: rust-no-panic
+language: Rust
+message: Avoid panic!() in library / server code - return a Result and let the caller decide
+severity: error
+rule:
+  kind: macro_invocation
+  pattern: "panic!($X)"
+note: |
+  panic!() crashes the process. In a library, propagate errors
+  with Result<T, E>. In a server, convert unrecoverable errors
+  into HTTP 5xx responses with a structured error type.

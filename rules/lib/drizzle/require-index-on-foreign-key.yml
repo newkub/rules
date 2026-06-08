@@ -1,0 +1,16 @@
+id: drizzle-require-index-on-fk
+language: TypeScript
+message: Foreign key columns should have a matching index for join performance
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "references($$$)"
+  not:
+    has:
+      kind: call_expression
+      pattern: "index($$$)"
+      stopBy: end
+note: |
+  Most DB engines don't auto-index foreign keys. Add
+  `index('fk_table_col_idx').on(t.col)` next to the
+  references() call.

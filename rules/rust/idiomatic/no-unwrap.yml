@@ -1,0 +1,11 @@
+id: rust-no-unwrap
+language: Rust
+message: Avoid .unwrap() in production code - propagate the error with ? or handle it explicitly
+severity: warning
+rule:
+  kind: call_expression
+  pattern: "$X.unwrap()"
+note: |
+  .unwrap() panics on Err/None and crashes the process. In library
+  code prefer the `?` operator, `match`, or `.unwrap_or_else` with
+  a sensible default. Tests and prototypes are fine.

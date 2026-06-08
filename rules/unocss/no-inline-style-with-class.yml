@@ -1,0 +1,15 @@
+id: unocss-no-inline-style-with-class
+language: Html
+message: Avoid style="..." when a UnoCSS utility class would do the same
+severity: hint
+rule:
+  kind: element
+  pattern: "<$$$ $$$ style=\"$$$\" $$$>"
+  has:
+    kind: attribute
+    regex: "class="
+    stopBy: end
+note: |
+  style attributes break responsive design (can't use
+  sm:/md:/lg: variants), theming, and caching. Reach for
+  a utility class first.

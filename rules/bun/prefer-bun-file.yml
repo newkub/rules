@@ -1,0 +1,8 @@
+id: bun-use-bun-file
+language: TypeScript
+message: Use Bun.file() for file reading
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "fs.readFileSync($ARG)"
+fix: "Bun.file($ARG).text()"

@@ -1,0 +1,10 @@
+id: general-no-todo-comments
+language: TypeScript
+message: TODO comments should be tracked in the issue tracker, not in source
+severity: warning
+rule:
+  kind: comment
+  regex: "(?i)\\b(TODO|FIXME|XXX|HACK)\\b"
+note: |
+  Universal rule. TODO/FIXME in code rot quickly and never get
+  followed up. Convert them to issues in the repo tracker.

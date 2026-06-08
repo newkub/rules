@@ -1,0 +1,18 @@
+id: svelte-require-ondestroy-cleanup
+language: TypeScript
+message: setInterval / setTimeout / addEventListener inside onMount need an onDestroy cleanup
+severity: warning
+rule:
+  kind: call_expression
+  any:
+    - pattern: "setInterval($X, $Y)"
+    - pattern: "setTimeout($X, $Y)"
+    - pattern: "addEventListener($X, $Y)"
+  inside:
+    kind: call_expression
+    pattern: "onMount($$$)"
+    stopBy: end
+note: |
+  SvelteKit's HMR and route changes don't auto-cleanup
+  intervals and listeners. Use onMount(() => { ...; return
+  () => clearInterval(id) }) to avoid duplicate timers.

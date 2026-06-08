@@ -1,0 +1,18 @@
+id: general-no-empty-catch
+language: TypeScript
+message: Empty catch blocks silently swallow errors - log or rethrow
+severity: error
+rule:
+  kind: catch_clause
+  pattern: "catch ($E) { }"
+note: |
+  Silent failures are the #1 cause of "mysterious" production bugs.
+  At minimum, log the error to the server logger with context.
+---
+id: general-no-empty-catch-typed
+language: TypeScript
+message: Empty catch blocks silently swallow errors - log or rethrow
+severity: error
+rule:
+  kind: catch_clause
+  pattern: "catch { }"

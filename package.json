@@ -1,0 +1,84 @@
+{
+	"name": "rules",
+	"version": "0.1.0",
+	"description": "AST-based code rules as a Vite plugin + CLI. Bundles 100+ rules for Svelte/TypeScript/SEO/a11y/security with toggleable categories and an installable agent skill.",
+	"type": "module",
+	"license": "MIT",
+	"engines": {
+		"bun": ">=1.3.0",
+		"node": ">=20.0.0"
+	},
+	"keywords": [
+		"vite",
+		"vite-plugin",
+		"ast-grep",
+		"linter",
+		"agent",
+		"agent-skill",
+		"svelte",
+		"typescript",
+		"seo",
+		"a11y",
+		"security",
+		"rules"
+	],
+	"author": "Veerapong",
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./cli": {
+			"types": "./dist/cli.d.ts",
+			"import": "./dist/cli.js"
+		},
+		"./rules": "./dist/rules",
+		"./rules/*": "./dist/rules/*",
+		"./skill": "./dist/skill",
+		"./skill/*": "./dist/skill/*",
+		"./package.json": "./package.json"
+	},
+	"bin": {
+		"rules": "./dist/cli.js"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"dev": "tsdown --watch",
+		"lint": "biome lint ./src",
+		"format": "biome format --write ./src",
+		"test": "bun test",
+		"test:run": "bun test --bail",
+		"verify": "bun run lint && bun run test:run && bun run build",
+		"prepublishOnly": "bun run verify"
+	},
+	"dependencies": {
+		"@ast-grep/napi": "^0.43.0",
+		"cac": "^7.0.0",
+		"js-yaml": "^4.2.0",
+		"picocolors": "^1.1.1",
+		"tinyglobby": "^0.2.17"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.16",
+		"@types/js-yaml": "^4.0.9",
+		"@types/node": "^25.9.2",
+		"tsdown": "^0.22.2",
+		"typescript": "^6.0.3"
+	},
+	"peerDependencies": {
+		"vite": ">=5.0.0"
+	},
+	"peerDependenciesMeta": {
+		"vite": {
+			"optional": true
+		}
+	}
+}

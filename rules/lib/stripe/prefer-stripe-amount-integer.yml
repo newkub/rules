@@ -1,0 +1,10 @@
+id: stripe-prefer-stripe-amount-integer
+language: TypeScript
+message: Pass Stripe amounts as a Number that's an integer; never compute as a literal decimal
+severity: warning
+rule:
+  pattern: "$X = $Y"
+  regex: "amount:\\s*(baht|dollar|usd|thb)\\s*\\*"
+note: |
+  Use a helper like `toStripeAmount(baht)` that multiplies by
+  100 and rounds. Keeps conversion logic in one tested place.

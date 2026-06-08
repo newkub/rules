@@ -1,0 +1,17 @@
+id: drizzle-no-select-star
+language: TypeScript
+message: Avoid .select() without explicit columns - enumerate the columns you need
+severity: warning
+rule:
+  kind: call_expression
+  pattern: "db.select().from($$$)"
+  not:
+    has:
+      kind: call_expression
+      pattern: "select($$$)"
+      stopBy: end
+note: |
+  Selecting all columns pulls unused data and breaks when
+  you add password_hash or internal fields. Use
+  db.select({ id: t.id, name: t.name }).from(...) and let
+  TypeScript check the projection.

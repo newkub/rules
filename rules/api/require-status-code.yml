@@ -1,0 +1,12 @@
+id: api-require-status-code
+language: TypeScript
+message: Error responses should set an explicit HTTP status (4xx / 5xx) - defaulting to 200 hides failures
+severity: warning
+rule:
+  kind: throw_statement
+  pattern: "throw error($X)"
+  regex: "throw\\s+error\\(\\s*\\d{3}\\b"
+note: |
+  Throwing an HttpError with a status code lets the server
+  respond with the correct semantics. Avoid throwing plain
+  Error from API handlers.

@@ -1,0 +1,15 @@
+id: rust-no-pub-crate-in-public-api
+language: Rust
+message: Avoid pub(crate) on fields of a public struct - it leaks the internal type
+severity: warning
+rule:
+  kind: field_declaration
+  regex: "pub\\s*\\(\\s*crate\\s*\\)\\s+\\w+:"
+  inside:
+    kind: struct_item
+    regex: "pub\\s+struct"
+    stopBy: end
+note: |
+  pub(crate) on a field of a pub struct makes the struct
+  impossible to construct from outside the crate. Either make
+  the field truly private (with a constructor) or expose it.

@@ -1,0 +1,14 @@
+id: ts-no-return-await-misuse
+language: TypeScript
+message: Use 'return await' in try/catch to make rejections catchable
+severity: hint
+rule:
+  kind: return_statement
+  pattern: "return $X($$$)"
+  inside:
+    kind: try_statement
+    stopBy: end
+note: |
+  `return fetch(...)` in a try/catch swallows the rejection
+  because the await happens after the function returns. Use
+  `return await fetch(...)` so the catch block can run.

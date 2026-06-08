@@ -1,0 +1,15 @@
+id: ts-no-explicit-any-func
+language: TypeScript
+message: Avoid function parameter types with 'any'
+severity: warning
+rule:
+  kind: identifier
+  regex: "\\bany\\b"
+---
+id: ts-no-explicit-any-func-tsx
+language: Tsx
+message: Avoid function parameter types with 'any'
+severity: warning
+rule:
+  kind: identifier
+  regex: "\\bany\\b"

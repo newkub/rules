@@ -1,0 +1,14 @@
+id: rust-prefer-borrow-over-clone
+language: Rust
+message: Prefer &T references over .clone() when you only need to read
+severity: hint
+rule:
+  kind: method_call_expression
+  pattern: "$X.clone()"
+  inside:
+    kind: function_item
+    regex: "fn\\s+(read|get|find|lookup)"
+    stopBy: end
+note: |
+  If the receiving function takes &T, the caller does not need
+  to clone. Pass references to avoid unnecessary allocations.

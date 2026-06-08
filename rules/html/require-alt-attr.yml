@@ -1,0 +1,14 @@
+id: html-require-alt-attr
+language: Html
+message: <img> must have an alt attribute (alt="" is fine for decorative images)
+severity: warning
+rule:
+  kind: element
+  regex: "<img"
+  not:
+    kind: attribute
+    regex: "alt="
+note: |
+  Missing alt is the most common a11y failure. Use
+  alt="descriptive text" for content images, alt="" for
+  decorative images, or aria-hidden="true" for icons.

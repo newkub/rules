@@ -1,0 +1,11 @@
+id: rust-no-mem-forget
+language: Rust
+message: Avoid std::mem::forget - it leaks memory and skips Drop side-effects (file close, refcount, etc.)
+severity: error
+rule:
+  kind: call_expression
+  pattern: "std::mem::forget($X)"
+note: |
+  mem::forget disables the destructor. Leaks without good
+  reason and breaks RAII invariants. If you genuinely need
+  to leak (FFI handover), use ManuallyDrop and add a comment.

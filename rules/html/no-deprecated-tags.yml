@@ -1,0 +1,14 @@
+id: html-no-deprecated-tags
+language: Html
+message: Avoid deprecated HTML tags (<center>, <font>, <marquee>, <frame>, <frameset>)
+severity: error
+rule:
+  kind: element
+  any:
+    - pattern: "<center>$$$</center>"
+    - pattern: "<font>$$$</font>"
+    - pattern: "<frame>$$$</frame>"
+    - pattern: "<frameset>$$$</frameset>"
+note: |
+  These tags were removed in HTML5. Replace with CSS
+  (text-align, font-*, flexbox) or modern layout primitives.

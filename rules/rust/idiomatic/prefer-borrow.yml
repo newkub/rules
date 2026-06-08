@@ -1,0 +1,11 @@
+id: rust-prefer-borrow
+language: Rust
+message: Prefer &T / &str references over owned String/Vec parameters when ownership is not needed
+severity: hint
+rule:
+  kind: parameter
+  regex: "\\w+:\\s*(String|Vec<u8>|Vec<\\w+>|HashMap<\\w+,\\w+>)"
+note: |
+  Owned types in function parameters force callers to allocate
+  or clone. Use &str / &[T] / &HashMap<_, _> unless the function
+  must consume the value.

@@ -1,0 +1,7 @@
+id: svelte-use-runes
+language: TypeScript
+message: Prefer Svelte 5 runes for reactivity
+severity: hint
+rule:
+  kind: identifier
+  regex: "\\$(state|derived|effect|rune)"

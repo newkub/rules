@@ -1,0 +1,11 @@
+id: rust-prefer-iterators
+language: Rust
+message: Prefer iterator combinators (.map/.filter/.fold) over manual for-loops
+severity: hint
+rule:
+  kind: for_expression
+  regex: "for\\s+\\w+\\s+in\\s+\\d+\\.\\.(?:\\d+)?\\s*\\{"
+note: |
+  Idiomatic Rust expresses transformations with iterator adapters.
+  Manual index loops obscure intent and lose bounds-check elision.
+  Use (0..n).map(...).collect() or .iter().filter(...).

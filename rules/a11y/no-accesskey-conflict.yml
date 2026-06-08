@@ -1,0 +1,11 @@
+id: a11y-no-accesskey-conflict
+language: Html
+message: Avoid accesskey attributes - they conflict with assistive tech and browser shortcuts
+severity: hint
+rule:
+  kind: attribute
+  regex: "accesskey="
+note: |
+  Accesskey shortcuts are easy to collide with browser, screen
+  reader, and OS shortcuts. Prefer visible buttons with proper
+  keyboard focus styling instead.

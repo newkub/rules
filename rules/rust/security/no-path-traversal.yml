@@ -1,0 +1,11 @@
+id: rust-no-path-traversal
+language: Rust
+message: Validate user-supplied file paths against an allow-list - avoid Path::new(request.input).exists()
+severity: error
+rule:
+  kind: call_expression
+  pattern: "Path::new($X).exists()"
+note: |
+  Reading files based on user input enables path traversal
+  (../../etc/passwd). Resolve the path, ensure it stays inside
+  the expected root, and canonicalize() before reading.

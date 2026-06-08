@@ -1,0 +1,21 @@
+id: a11y-require-aria-label-icon-button
+language: Html
+message: Icon-only buttons need aria-label or visible text for screen reader users
+severity: warning
+rule:
+  kind: element
+  pattern: "<button>$$$</button>"
+  not:
+    any:
+      - has:
+          kind: element
+          regex: "<span|<i|<svg"
+          stopBy: end
+      - has:
+          kind: attribute
+          regex: "aria-label=|aria-labelledby=|title="
+          stopBy: end
+note: |
+  Buttons that contain only an icon (no visible text) are
+  inaccessible to screen readers. Add aria-label="..." or
+  include hidden text via <span class="sr-only">.

@@ -1,0 +1,15 @@
+id: vue-prefer-script-setup
+language: TypeScript
+message: Use <script setup> for all single-file components - it's shorter and tree-shakes better
+severity: hint
+rule:
+  kind: script_element
+  not:
+    has:
+      kind: attribute
+      regex: "setup"
+      stopBy: end
+note: |
+  <script setup> is the recommended style in Vue 3. The
+  Options API (data(), methods, computed: {}) is still
+  supported but considered legacy.

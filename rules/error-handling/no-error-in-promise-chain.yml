@@ -1,0 +1,11 @@
+id: ts-no-error-in-promise-chain
+language: TypeScript
+message: Avoid .then().then() chains - prefer async/await for readability and stack traces
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "$X.then($$$).then($$$)"
+note: |
+  Long .then().then() chains obscure control flow and lose
+  try/catch semantics. Use async/await, which is shorter and
+  integrates with try/catch + Sentry breadcrumbs.

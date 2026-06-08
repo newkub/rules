@@ -1,0 +1,16 @@
+id: no-any-type
+language: TypeScript
+message: Avoid using 'any' type - use explicit types or unknown
+severity: warning
+rule:
+  kind: identifier
+  regex: "\\bany\\b"
+
+---
+id: no-any-type-tsx
+language: Tsx
+message: Avoid using 'any' type - use explicit types or unknown
+severity: warning
+rule:
+  kind: identifier
+  regex: "\\bany\\b"

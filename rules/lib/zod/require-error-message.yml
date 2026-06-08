@@ -1,0 +1,16 @@
+id: zod-require-error-message
+language: TypeScript
+message: Zod validators should attach a human-readable error message
+severity: warning
+rule:
+  kind: call_expression
+  pattern: "z.string()"
+  not:
+    has:
+      kind: call_expression
+      pattern: ".min($$$, $$$)|.max($$$, $$$)|.email($$$)|.url($$$)"
+      stopBy: end
+note: |
+  The default Zod error for "Required" is fine, but specific
+  validators should carry a localized message. Use
+  .min(1, "Name is required").max(80, "Name too long").

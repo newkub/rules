@@ -1,0 +1,11 @@
+id: rust-prefer-thiserror
+language: Rust
+message: Use the thiserror crate for error enums, not Display + Error impls by hand
+severity: hint
+rule:
+  kind: impl_item
+  pattern: "impl std::fmt::Display for $X { $$$ }"
+note: |
+  Hand-rolled Display+Error impls are repetitive and error-prone.
+  thiserror::Error generates both impls plus From conversions
+  in a single #[derive(Error)] attribute.

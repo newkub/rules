@@ -1,0 +1,16 @@
+id: performance-no-await-in-loop
+language: TypeScript
+message: Avoid await inside for/forEach loops - use Promise.all for parallel execution
+severity: warning
+rule:
+  kind: expression_statement
+  has:
+    kind: await_expression
+    stopBy: end
+  inside:
+    kind: for_statement
+    stopBy: end
+note: |
+  Sequential await on independent Promises serializes them.
+  Build a list of promises and `await Promise.all(list)`
+  for O(1) wall time.

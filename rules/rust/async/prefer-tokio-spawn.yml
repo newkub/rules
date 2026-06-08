@@ -1,0 +1,14 @@
+id: rust-prefer-tokio-spawn
+language: Rust
+message: Use tokio::spawn for concurrent tasks instead of std::thread::spawn in async code
+severity: warning
+rule:
+  kind: call_expression
+  pattern: "std::thread::spawn($X)"
+  inside:
+    kind: function_item
+    regex: "async\\s+fn"
+    stopBy: end
+note: |
+  std::thread::spawn in async code creates a thread that the
+  runtime cannot track. Use tokio::spawn or spawn_blocking.

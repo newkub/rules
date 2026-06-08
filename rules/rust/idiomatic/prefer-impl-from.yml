@@ -1,0 +1,11 @@
+id: rust-prefer-impl-from
+language: Rust
+message: Use From<T> trait for cheap conversions instead of newtype(...).into() helpers
+severity: hint
+rule:
+  pattern: "$X.into()"
+  regex: "\\.into\\(\\)$"
+note: |
+  Implementing From<A> for B gives you Into<B> for A for free
+  and integrates with the standard conversion machinery (TryFrom,
+  blanket Into impls). Avoid manual .into() helpers.

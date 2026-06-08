@@ -1,0 +1,18 @@
+id: api-require-input-validation
+language: TypeScript
+message: API handlers must validate request body / params with Zod (or another schema) before use
+severity: error
+rule:
+  kind: function_declaration
+  regex: "export\\s+(?:async\\s+)?function\\s+(GET|POST|PUT|PATCH|DELETE|PATCH)"
+  not:
+    has:
+      any:
+        - pattern: "$SCHEMA.parse($X)"
+        - pattern: "$SCHEMA.safeParse($X)"
+        - pattern: "parseFormData($X)"
+      stopBy: end
+note: |
+  Unvalidated input is the root cause of most security bugs.
+  Use z.object({...}).parse(request.json()) and let Zod
+  produce 400 responses on shape errors.

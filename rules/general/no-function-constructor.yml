@@ -1,0 +1,9 @@
+id: general-no-function-constructor
+language: TypeScript
+message: new Function(...) is an indirect eval() - use a static function or import
+severity: error
+rule:
+  pattern: "new Function($$$)"
+note: |
+  Universal rule: the Function constructor has the same risk
+  profile as eval() - arbitrary code from a string.

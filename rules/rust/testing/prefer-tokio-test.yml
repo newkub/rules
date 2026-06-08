@@ -1,0 +1,15 @@
+id: rust-prefer-tokio-test
+language: Rust
+message: Use #[tokio::test] for async tests, not #[test] + tokio::runtime::Runtime::new()
+severity: warning
+rule:
+  kind: function_item
+  regex: "#\\[test\\]\\s*\\n\\s*(pub\\s+)?(async\\s+)?fn"
+  has:
+    kind: call_expression
+    pattern: "tokio::runtime::Runtime::new()"
+    stopBy: end
+note: |
+  Manually building a Runtime inside a #[test] function is
+  verbose and creates a new runtime per test. Use
+  #[tokio::test] for a shared current-thread runtime.

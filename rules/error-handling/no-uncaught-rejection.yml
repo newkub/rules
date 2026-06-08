@@ -1,0 +1,16 @@
+id: ts-no-uncaught-rejection
+language: TypeScript
+message: Add .catch() or await on a Promise inside a server handler to avoid unhandled rejections
+severity: warning
+rule:
+  kind: expression_statement
+  has:
+    kind: call_expression
+    pattern: "$X($$$).catch($$$)"
+    stopBy: end
+  not:
+    regex: "catch"
+note: |
+  Fire-and-forget Promise calls (no .catch, no await) can
+  produce unhandled rejection warnings and lose the error.
+  Use await or attach a .catch with proper handling.

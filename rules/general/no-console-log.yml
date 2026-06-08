@@ -1,0 +1,10 @@
+id: general-no-console-log
+language: TypeScript
+message: console.log left in code is a code smell - use a structured logger (Bun, pino, etc.)
+severity: warning
+rule:
+  kind: call_expression
+  pattern: "console.log($ARG)"
+note: |
+  Universal rule. console.log bypasses log levels, structured
+  fields, transports, and Sentry. Use the shared logger module.

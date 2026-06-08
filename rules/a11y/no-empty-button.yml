@@ -1,0 +1,19 @@
+id: a11y-no-empty-button
+language: Html
+message: <button> without accessible name fails WCAG 4.1.2
+severity: error
+rule:
+  kind: element
+  pattern: "<button>$$$</button>"
+  not:
+    any:
+      - has:
+          kind: element
+          stopBy: end
+      - has:
+          kind: attribute
+          regex: "aria-label=|aria-labelledby=|title="
+          stopBy: end
+note: |
+  Every interactive control must have an accessible name. Pair with
+  require-aria-label-icon-button for icon-only buttons.

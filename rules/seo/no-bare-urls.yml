@@ -1,0 +1,13 @@
+id: seo-no-bare-urls
+language: Html
+message: Avoid raw URLs in copy - wrap in descriptive anchor tags for accessibility and SEO
+severity: hint
+rule:
+  pattern: "https://$$$"
+  regex: "(?<!href=\"|href=')(?<!src=\"|src=')\\bhttps?://[^\\s\"'<]+"
+  inside:
+    kind: element
+    stopBy: end
+note: |
+  Bare URLs are hard to read, don't pass link equity, and break on
+  line wrap. Always use <a href="..."> with descriptive anchor text.

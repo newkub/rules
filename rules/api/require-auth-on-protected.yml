@@ -1,0 +1,25 @@
+id: api-require-auth-on-protected
+language: TypeScript
+message: Protected endpoints (anything under /api/booking, /api/billing, /api/profile) must call requireAuth or equivalent
+severity: error
+rule:
+  kind: function_declaration
+  regex: "export\\s+(?:async\\s+)?function\\s+(GET|POST|PUT|PATCH|DELETE)"
+  inside:
+    kind: source_file
+    regex: "src/routes/api/(booking|billing|profile|provider|admin|users)"
+    stopBy: end
+  not:
+    has:
+      any:
+        - pattern: "requireAuth($$$)"
+        - pattern: "requireUser($$$)"
+        - pattern: "requireProvider($$$)"
+        - pattern: "locals.user"
+        - pattern: "locals.auth"
+        - pattern: "getSession($$$)"
+      stopBy: end
+note: |
+  Unauthenticated access to booking/billing endpoints is a
+  critical vulnerability. Always call requireAuth() at the
+  top of the handler.

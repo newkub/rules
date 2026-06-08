@@ -1,0 +1,6 @@
+id: use-type-alias
+language: TypeScript
+message: Prefer 'type' alias over 'interface' for simple type definitions
+severity: hint
+rule:
+  kind: interface_declaration

@@ -1,0 +1,11 @@
+id: vue-no-arrow-function-in-template
+language: TypeScript
+message: Avoid arrow functions in template expressions - they re-create on every render and break Vue's optimization
+severity: warning
+rule:
+  kind: attribute
+  pattern: "@click=($X) => $Y"
+note: |
+  Inline arrow handlers in templates re-allocate on every
+  re-render and prevent event handler caching. Define the
+  handler in <script setup> and reference it: @click="onClick".

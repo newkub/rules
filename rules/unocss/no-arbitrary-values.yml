@@ -1,0 +1,11 @@
+id: unocss-no-arbitrary-values
+language: Html
+message: Avoid arbitrary values [42px] in UnoCSS classes - use a token or extend the theme
+severity: hint
+rule:
+  kind: attribute
+  regex: "class=[\"'][^\"']*\\[(?:[0-9]+|[0-9]+px|[0-9]+rem)\\][^\"']*[\"']"
+note: |
+  Arbitrary values bypass the design system. If you need a
+  new size, add it to uno.config.ts so the rest of the app
+  can reuse it.

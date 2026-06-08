@@ -1,0 +1,18 @@
+id: vue-no-v-html-with-user-content
+language: TypeScript
+message: Avoid v-html with user-generated content to prevent XSS
+severity: error
+rule:
+  kind: attribute
+  pattern: "v-html"
+
+---
+id: vue-use-script-setup
+language: TypeScript
+message: Prefer <script setup> for better performance and type inference
+severity: hint
+rule:
+  kind: script_element
+  not:
+    kind: attribute
+    regex: "setup"

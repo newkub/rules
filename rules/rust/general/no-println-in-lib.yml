@@ -1,0 +1,10 @@
+id: rust-no-println-in-lib
+language: Rust
+message: Avoid println!() in library code - return data or use the log crate
+severity: warning
+rule:
+  kind: macro_invocation
+  pattern: "println!($X)"
+note: |
+  println!() in library code forces output on the caller and
+  bypasses log levels. Return the data, or use log/tracing.

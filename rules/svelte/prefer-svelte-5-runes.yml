@@ -1,0 +1,14 @@
+id: svelte-prefer-runes
+language: TypeScript
+message: Prefer Svelte 5 runes ($state, $derived, $effect) over legacy stores (writable, derived, readable)
+severity: warning
+rule:
+  kind: call_expression
+  any:
+    - pattern: "writable($$$)"
+    - pattern: "readable($$$)"
+    - pattern: "derived($$$, $X)"
+note: |
+  Svelte 5 runes ($state, $derived, $effect) provide
+  fine-grained reactivity that is faster and more ergonomic
+  than the legacy store API. Migrate writable() to $state(...).

@@ -1,0 +1,10 @@
+id: security-no-form-action-javascript
+language: Html
+message: Form action with javascript: URL is unsafe - use a real endpoint
+severity: error
+rule:
+  kind: attribute
+  regex: "action=[\"']javascript:"
+note: |
+  javascript: URLs in form actions run arbitrary code on submit and
+  are a known XSS vector. Use a real route (action=\"...\") instead.

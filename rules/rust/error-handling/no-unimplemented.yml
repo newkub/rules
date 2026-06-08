@@ -1,0 +1,12 @@
+id: rust-no-unimplemented
+language: Rust
+message: Remove unimplemented!() / todo!() before merging - replace with the real implementation
+severity: error
+rule:
+  any:
+    - pattern: "unimplemented!()"
+    - pattern: "todo!()"
+note: |
+  unimplemented!() and todo!() panic at runtime, hiding
+  missing logic behind a clean compile. Replace with a proper
+  implementation or a typed NotImplemented error.

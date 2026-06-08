@@ -1,0 +1,19 @@
+id: drizzle-prefer-transaction
+language: TypeScript
+message: Multi-statement DB writes should be wrapped in db.transaction() for atomicity
+severity: warning
+rule:
+  kind: function_declaration
+  regex: "export\\s+(?:async\\s+)?function"
+  has:
+    kind: call_expression
+    pattern: "db.insert($$$)"
+    stopBy: end
+  has:
+    kind: call_expression
+    pattern: "db.update($$$)"
+    stopBy: end
+note: |
+  A booking creation typically writes to bookings,
+  booking_items, notifications, and audit_log. If any one
+  fails, the rest should roll back. Wrap in db.transaction().

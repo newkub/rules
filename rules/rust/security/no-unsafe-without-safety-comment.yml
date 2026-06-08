@@ -1,0 +1,14 @@
+id: rust-no-unsafe-without-safety-comment
+language: Rust
+message: unsafe blocks must include a // SAFETY: comment explaining the invariant
+severity: warning
+rule:
+  kind: unsafe_block
+  not:
+    has:
+      kind: line_comment
+      regex: "SAFETY"
+      stopBy: end
+note: |
+  Clippy's `undocumented_unsafe_blocks` lint enforces the same
+  rule. The comment must justify why the unsafe is sound.

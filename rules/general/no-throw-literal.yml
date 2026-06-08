@@ -1,0 +1,11 @@
+id: general-no-throw-literal
+language: TypeScript
+message: Throw Error subclasses, not raw strings or numbers - keeps stack traces and messages consistent
+severity: error
+rule:
+  kind: throw_statement
+  pattern: "throw $X"
+  regex: "throw\\s+['\"`]|throw\\s+\\d"
+note: |
+  Universal error handling rule. `throw "oops"` loses the stack
+  trace. Use a subclass of Error, e.g. throw new ValidationError(...).

@@ -1,0 +1,19 @@
+id: security-no-stripe-live-key-in-code
+language: TypeScript
+message: Stripe live secret keys (sk_live_...) must never be committed - use environment variables
+severity: error
+rule:
+  pattern: "$X = $Y"
+  regex: "[\"']sk_live_[A-Za-z0-9]{16,}[\"']"
+note: |
+  Stripe live secret keys give full API access to your account. Use
+  STRIPE_SECRET_KEY from environment and never paste the literal value
+  into code, tests, or fixtures.
+---
+id: security-no-stripe-publishable-key-in-server
+language: TypeScript
+message: Stripe publishable key (pk_live_...) should not appear in server-side code
+severity: warning
+rule:
+  pattern: "$X = $Y"
+  regex: "[\"']pk_live_[A-Za-z0-9]{16,}[\"']"

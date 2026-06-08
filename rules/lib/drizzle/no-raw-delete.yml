@@ -1,0 +1,7 @@
+id: drizzle-no-raw-delete
+language: TypeScript
+message: Use Drizzle query builder for delete operations
+severity: warning
+rule:
+  kind: call_expression
+  pattern: "db.delete($TABLE).values($ARG)"

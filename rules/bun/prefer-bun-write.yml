@@ -1,0 +1,12 @@
+id: bun-prefer-bun-write
+language: TypeScript
+message: Use Bun.write() instead of fs.writeFileSync for file output
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "fs.writeFileSync($X, $Y)"
+fix: "Bun.write($X, $Y)"
+note: |
+  Bun.write() is async, returns a promise, and works with
+  Web Streams for large files. writeFileSync blocks the
+  event loop and is the wrong tool for server code.

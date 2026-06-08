@@ -1,0 +1,11 @@
+id: rust-no-box-leak
+language: Rust
+message: Avoid Box::leak - it permanently leaks memory and is rarely necessary
+severity: error
+rule:
+  kind: call_expression
+  pattern: "Box::leak($X)"
+note: |
+  Box::leak converts a Box<T> into a &'static T, leaking
+  until the process exits. Use 'static, OnceLock, or lazy
+  initialization patterns instead.

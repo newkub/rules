@@ -1,0 +1,14 @@
+id: seo-require-twitter-card-svelte
+language: Html
+message: Public pages should include Twitter Card meta tags
+severity: hint
+rule:
+  kind: element
+  pattern: "<svelte:head>"
+  has:
+    kind: element
+    pattern: "<meta name=\"twitter:card\""
+    stopBy: end
+note: |
+  Twitter Card tags (summary_large_image) control how links render on
+  X / Twitter and improve click-through rates from the platform.

@@ -1,0 +1,11 @@
+id: rust-no-mut-on-unused
+language: Rust
+message: Remove 'mut' from bindings that are never reassigned
+severity: hint
+rule:
+  kind: let_declaration
+  regex: "let\\s+mut\\s+(\\w+)"
+note: |
+  Unnecessary mut hurts readability and prevents the compiler
+  from catching real mutations. rustc already warns about
+  this; this rule surfaces it in editor time.

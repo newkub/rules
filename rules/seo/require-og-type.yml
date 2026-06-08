@@ -1,0 +1,15 @@
+id: seo-require-og-type
+language: Html
+message: og:type meta tag should be set to a valid value (website, article, product, etc.)
+severity: hint
+rule:
+  kind: element
+  pattern: "<svelte:head>"
+  has:
+    kind: element
+    pattern: "<meta property=\"og:type\""
+    stopBy: end
+note: |
+  og:type tells social platforms how to interpret the content.
+  Common values: website (default), article (blog posts),
+  product (e-commerce), profile (user pages).

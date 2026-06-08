@@ -1,0 +1,15 @@
+id: no-sync-io
+language: TypeScript
+message: Avoid blocking the event loop with synchronous operations
+severity: warning
+rule:
+  kind: call_expression
+  pattern: "readFileSync($ARG)"
+---
+id: no-sync-io-tsx
+language: Tsx
+message: Avoid blocking the event loop with synchronous operations
+severity: warning
+rule:
+  kind: call_expression
+  pattern: "readFileSync($ARG)"

@@ -1,0 +1,15 @@
+id: seo-require-title-tag
+language: Html
+message: Every public page must declare a <title> tag inside <svelte:head>
+severity: warning
+rule:
+  kind: element
+  pattern: "<svelte:head>"
+  has:
+    kind: element
+    pattern: "<title>$$$</title>"
+    stopBy: end
+note: |
+  The <title> tag is the single most important SEO element. It is
+  used for browser tabs, bookmarks, search results, and social shares.
+  Recommended length 50-60 characters.

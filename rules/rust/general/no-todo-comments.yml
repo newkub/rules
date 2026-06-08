@@ -1,0 +1,10 @@
+id: rust-no-todo-comments
+language: Rust
+message: TODO/FIXME comments should be tracked in the issue tracker, not in source
+severity: warning
+rule:
+  kind: line_comment
+  regex: "(?i)\\b(TODO|FIXME|XXX|HACK)\\b"
+note: |
+  Universal rule. TODO/FIXME in code rot quickly. Open an
+  issue and link it from the comment instead.

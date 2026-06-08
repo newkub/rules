@@ -1,0 +1,11 @@
+id: rust-prefer-builder-pattern
+language: Rust
+message: Use the builder pattern for structs with >4 optional fields, instead of long tuple-struct constructors
+severity: hint
+rule:
+  kind: function_item
+  regex: "pub\\s+fn\\s+new\\(.*,.*,.*,.*,.*\\)"
+note: |
+  Constructors with more than ~4 positional parameters are hard
+  to read and impossible to evolve. Use a builder:
+  ServerConfig::builder().host("...").port(8080).build().

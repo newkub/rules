@@ -1,0 +1,15 @@
+id: package-json-require-license
+language: Json
+message: package.json must declare a "license" field
+severity: hint
+rule:
+  kind: object
+  regex: "\"name\"\\s*:\\s*\"[^\"]+\""
+  not:
+    has:
+      kind: property
+      regex: "\"license\""
+      stopBy: end
+note: |
+  A missing license makes the package legally ambiguous.
+  Use "MIT", "Apache-2.0", or your org's standard license.

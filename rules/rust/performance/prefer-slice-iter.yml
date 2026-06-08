@@ -1,0 +1,12 @@
+id: rust-prefer-slice-iter
+language: Rust
+message: Prefer .iter() / .iter_mut() over .into_iter() when ownership is not needed
+severity: hint
+rule:
+  kind: method_call_expression
+  pattern: "$X.into_iter()"
+  regex: "\\.into_iter\\(\\)"
+note: |
+  .into_iter() on a Vec consumes it. .iter() borrows and is
+  usually what you want in read-only loops. Reach for
+  .into_iter() only when you need to own the values.

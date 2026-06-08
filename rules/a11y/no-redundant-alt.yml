@@ -1,0 +1,10 @@
+id: a11y-no-redundant-alt
+language: Html
+message: Avoid redundant alt text like "image of" or "picture of" - screen readers already announce "image"
+severity: hint
+rule:
+  kind: attribute
+  regex: "alt=[\"'](image of|picture of|photo of|graphic of)\\b"
+note: |
+  "image of a cat" is announced as "image, image of a cat". Keep
+  alt text concise: just "cat" or "orange tabby cat on a sofa".

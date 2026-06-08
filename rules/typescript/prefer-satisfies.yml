@@ -1,0 +1,7 @@
+id: ts-use-satisfies
+language: TypeScript
+message: Consider using satisfies for type narrowing
+severity: hint
+rule:
+  kind: as_expression
+  regex: "\\bas\\s+\\w"

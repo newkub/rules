@@ -1,0 +1,13 @@
+id: general-no-floating-promise
+language: TypeScript
+message: Promises must be awaited, returned, or explicitly void-ed - floating promises swallow rejections
+severity: warning
+rule:
+  kind: expression_statement
+  has:
+    kind: await_expression
+    stopBy: end
+note: |
+  Universal async rule. `fireAndForget()` (no await, no .catch())
+  is a bug factory. Use `await fireAndForget()` or
+  `void fireAndForget()` with explicit error handling.

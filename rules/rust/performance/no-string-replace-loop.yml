@@ -1,0 +1,14 @@
+id: rust-no-string-replace-loop
+language: Rust
+message: Avoid repeated String allocations - use String::with_capacity and push_str
+severity: hint
+rule:
+  kind: expression_statement
+  pattern: "$X = $X + $Y"
+  inside:
+    kind: for_expression
+    stopBy: end
+note: |
+  result = result + something allocates a fresh String on
+  every iteration. Use result.push_str(&something) (amortized
+  O(1)) or result += &something with a pre-sized String.

@@ -1,0 +1,15 @@
+id: ts-prefer-try-catch-async
+language: TypeScript
+message: async functions in route handlers should be wrapped in try/catch to translate errors into HTTP responses
+severity: warning
+rule:
+  kind: function_declaration
+  regex: "export\\s+async\\s+function\\s+(GET|POST|PUT|PATCH|DELETE)"
+  not:
+    has:
+      kind: try_statement
+      stopBy: end
+note: |
+  Unhandled rejections in SvelteKit / Nitro handlers crash the
+  request with a generic 500. Wrap the body in try { ... } catch
+  to call error(status, message) and surface a clean response.

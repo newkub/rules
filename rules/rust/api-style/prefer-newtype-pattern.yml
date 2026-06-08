@@ -1,0 +1,11 @@
+id: rust-prefer-newtype-pattern
+language: Rust
+message: Wrap primitives in newtypes (struct UserId(String)) instead of bare String/u64
+severity: hint
+rule:
+  kind: function_item
+  regex: "fn\\s+\\w+\\([^)]*\\b(user_id|userId|email|password|amount|price)\\b\\s*:\\s*(String|u64|i64|f64|usize)\\b"
+note: |
+  Newtypes give you type-safe APIs: you can't pass an Email
+  where a UserId is expected. Also lets you attach validation
+  and Display impls to the wrapper.

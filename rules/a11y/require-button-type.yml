@@ -1,0 +1,13 @@
+id: a11y-require-button-type
+language: Html
+message: <button> elements must have an explicit type="button" or type="submit" to avoid implicit submit
+severity: warning
+rule:
+  kind: element
+  pattern: "<button>$$$</button>"
+  not:
+    kind: attribute
+    regex: "type=[\"'](button|submit|reset)[\"']"
+note: |
+  Default <button> type is "submit" which can submit the closest
+  <form> unexpectedly. Always set type="button" for action buttons.

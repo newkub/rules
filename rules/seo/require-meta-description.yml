@@ -1,0 +1,14 @@
+id: seo-require-meta-description-svelte
+language: Html
+message: Public pages must have a meta description for SEO
+severity: warning
+rule:
+  kind: element
+  pattern: "<svelte:head>"
+  has:
+    kind: element
+    pattern: "<meta name=\"description\""
+    stopBy: end
+note: |
+  All public marketing pages should have a meta description tag inside
+  <svelte:head>. Recommended length 120-160 characters.

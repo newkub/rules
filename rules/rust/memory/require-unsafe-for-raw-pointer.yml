@@ -1,0 +1,15 @@
+id: rust-require-unsafe-for-raw-pointer
+language: Rust
+message: Dereferencing a raw pointer (*const T, *mut T) requires an unsafe block
+severity: error
+rule:
+  kind: unary_expression
+  regex: "\\*[a-zA-Z_][a-zA-Z0-9_]*"
+  not:
+    inside:
+      kind: unsafe_block
+      stopBy: end
+note: |
+  Raw pointer dereferences are undefined behavior outside an
+  unsafe block. Wrap in unsafe { ... } and document the
+  invariant with // SAFETY:.

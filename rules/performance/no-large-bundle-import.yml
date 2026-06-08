@@ -1,0 +1,11 @@
+id: performance-no-large-bundle-import
+language: TypeScript
+message: Avoid importing entire lodash / moment / chart.js - use named imports or subpath imports
+severity: warning
+rule:
+  kind: import_statement
+  regex: "from\\s+['\"](lodash|moment|chart\\.js|@mui/material|antd)['\"]"
+note: |
+  `import _ from 'lodash'` pulls 70kb+. Use
+  `import debounce from 'lodash/debounce'` (or the
+  ES modules) to keep the client bundle small.

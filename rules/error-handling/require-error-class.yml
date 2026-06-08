@@ -1,0 +1,10 @@
+id: ts-require-error-class
+language: TypeScript
+message: Throwing 'new Error(msg)' loses the cause - prefer custom subclasses or wrap with `cause`
+severity: hint
+rule:
+  kind: throw_statement
+  pattern: "throw new Error($X)"
+note: |
+  Plain Error(msg) doesn't carry the underlying cause. Use
+  throw new ValidationError(msg) or throw new Error(msg, { cause: originalError }).

@@ -1,0 +1,16 @@
+id: zod-prefer-safe-parse
+language: TypeScript
+message: Use schema.safeParse() in user-facing code to handle validation errors without throwing
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "$SCHEMA.parse($X)"
+  inside:
+    kind: function_declaration
+    regex: "export\\s+(?:async\\s+)?function\\s+(GET|POST|PUT|PATCH|DELETE)"
+    stopBy: end
+note: |
+  .parse() throws ZodError, which the route handler must
+  catch and translate. .safeParse() returns a discriminated
+  union { success, data, error } - much easier to map to
+  a 400 response.

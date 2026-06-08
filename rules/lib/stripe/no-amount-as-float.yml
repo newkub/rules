@@ -1,0 +1,11 @@
+id: stripe-no-amount-as-float
+language: TypeScript
+message: Stripe amounts must be integers in the smallest currency unit (satang for THB, cents for USD) - never floats
+severity: error
+rule:
+  pattern: "$X = $Y"
+  regex: "amount\\s*[:=]\\s*\\d+\\.\\d+"
+note: |
+  Float math loses precision (0.1 + 0.2 !== 0.3). Stripe
+  charges in the smallest unit: THB uses satang (multiply
+  baht by 100), USD uses cents. Use Math.round(baht * 100).

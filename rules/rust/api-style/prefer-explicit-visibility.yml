@@ -1,0 +1,14 @@
+id: rust-prefer-explicit-visibility
+language: Rust
+message: Always declare an explicit visibility (pub, pub(crate), pub(super)) on items
+severity: hint
+rule:
+  kind: function_item
+  regex: "^\\s*fn\\s+[A-Z]\\w*"
+  inside:
+    kind: source_file
+    stopBy: end
+note: |
+  Implicit private visibility on capitalized functions is a
+  common bug. Always write `pub fn` or `fn` to make the
+  intent obvious.

@@ -1,0 +1,7 @@
+id: no-raw-sql
+language: TypeScript
+message: Use parameterized queries or query builder methods
+severity: warning
+rule:
+  kind: string
+  regex: "(SELECT|INSERT|UPDATE|DELETE).*FROM"

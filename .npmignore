@@ -1,0 +1,14 @@
+node_modules
+dist/.tsbuildinfo
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+tests
+scripts
+src
+tsconfig.json
+tsdown.config.ts
+biome.json
+bun.lock

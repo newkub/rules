@@ -1,0 +1,27 @@
+id: nitro-prefer-event-strict-handling
+language: TypeScript
+message: Use event.stripe() or event.platform() with proper type handling
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "event"
+
+---
+id: nitro-no-direct-res-json
+language: TypeScript
+message: Use c.json() or c.text() instead of res.json() in Nitro handlers
+severity: warning
+rule:
+  kind: member_expression
+  regex: "res\\.json\\("
+
+---
+id: nitro-use-define-route
+language: TypeScript
+message: Use defineEventHandler for type-safe route handlers
+severity: hint
+rule:
+  kind: function_declaration
+  not:
+    kind: call_expression
+    pattern: "defineEventHandler"

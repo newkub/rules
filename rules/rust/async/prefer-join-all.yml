@@ -1,0 +1,10 @@
+id: rust-prefer-join-all
+language: Rust
+message: Use futures::future::join_all or tokio::join! for concurrent futures
+severity: hint
+rule:
+  pattern: "$FUT1.await; $FUT2.await;"
+note: |
+  Sequential .await on independent futures serializes them.
+  Use tokio::join!(a, b) to run them concurrently on the same
+  task, or join_all for a dynamic Vec<Future>.

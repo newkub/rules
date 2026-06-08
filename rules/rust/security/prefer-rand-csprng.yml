@@ -1,0 +1,11 @@
+id: rust-prefer-rand-csprng
+language: Rust
+message: Use the rand::thread_rng or getrandom for cryptographic randomness, not random() from libc
+severity: error
+rule:
+  kind: identifier
+  regex: "\\brand\\s*\\(\\s*\\)"
+note: |
+  libc::rand() is not cryptographically secure. Use
+  rand::thread_rng().gen() for general randomness, or
+  getrandom::getrandom() for direct OS CSPRNG access.

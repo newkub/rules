@@ -1,0 +1,20 @@
+id: rust-no-blocking-in-async
+language: Rust
+message: Blocking calls (std::fs, std::thread::sleep, reqwest::blocking) inside async fn block the executor
+severity: error
+rule:
+  kind: call_expression
+  any:
+    - pattern: "std::fs::read_to_string($X)"
+    - pattern: "std::fs::read($X)"
+    - pattern: "std::fs::write($X, $Y)"
+    - pattern: "std::thread::sleep($X)"
+    - pattern: "std::net::TcpStream::connect($X)"
+  inside:
+    kind: function_item
+    regex: "async\\s+fn"
+    stopBy: end
+note: |
+  Inside an async fn, blocking I/O blocks the entire executor
+  thread. Use tokio::fs, tokio::time::sleep, tokio::net, and
+  wrap unavoidable blocking work in tokio::task::spawn_blocking.

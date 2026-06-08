@@ -1,0 +1,24 @@
+id: seo-require-og-tags-svelte
+language: Html
+message: Public pages must include Open Graph meta tags (og:title, og:description, og:image)
+severity: warning
+rule:
+  kind: element
+  pattern: "<svelte:head>"
+  all:
+    - has:
+        kind: element
+        pattern: "<meta property=\"og:title\""
+        stopBy: end
+    - has:
+        kind: element
+        pattern: "<meta property=\"og:description\""
+        stopBy: end
+    - has:
+        kind: element
+        pattern: "<meta property=\"og:image\""
+        stopBy: end
+note: |
+  Open Graph tags control how pages appear when shared on social
+  platforms (Facebook, LinkedIn, Slack, etc.). The SeoMeta component
+  handles these by default; only override when necessary.

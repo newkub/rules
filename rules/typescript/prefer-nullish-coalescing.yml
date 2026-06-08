@@ -1,0 +1,7 @@
+id: nullish-coalescing
+language: TypeScript
+message: Use ?? instead of || for nullish coalescing when appropriate
+severity: hint
+rule:
+  kind: binary_expression
+  regex: "\\|\\|"

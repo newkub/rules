@@ -1,0 +1,16 @@
+id: nitro-use-define-event-handler
+language: TypeScript
+message: Use defineEventHandler for Nitro route handlers - it provides typed event and response helpers
+severity: hint
+rule:
+  kind: function_declaration
+  regex: "export\\s+(?:async\\s+)?function\\s+(GET|POST|PUT|PATCH|DELETE)"
+  not:
+    has:
+      kind: call_expression
+      pattern: "defineEventHandler($$$)"
+      stopBy: end
+note: |
+  defineEventHandler({...}) gives you a typed H3Event, the
+  Nitro context (db, env, etc.), and the standard response
+  helpers (setHeader, sendRedirect, ...).

@@ -1,0 +1,11 @@
+id: rust-prefer-cow
+language: Rust
+message: Return Cow<'_, str> from fallible string transformations to avoid allocation on the borrow path
+severity: hint
+rule:
+  kind: function_item
+  regex: "fn\\s+\\w+\\([^)]*\\)\\s*->\\s*String\\s*\\{"
+note: |
+  Functions that sometimes modify a string and sometimes pass
+  it through can return Cow<'_, str> and avoid the alloc on
+  the no-op path.

@@ -1,0 +1,18 @@
+id: stripe-require-idempotency-on-charge
+language: TypeScript
+message: Charge / PaymentIntent calls should pass an idempotencyKey to allow safe retries
+severity: warning
+rule:
+  kind: call_expression
+  any:
+    - pattern: "stripe.paymentIntents.create($$$)"
+    - pattern: "stripe.charges.create($$$)"
+    - pattern: "stripe.checkout.sessions.create($$$)"
+  not:
+    has:
+      kind: property_identifier
+      regex: "idempotencyKey"
+      stopBy: end
+note: |
+  Without an idempotencyKey, network retries can result in
+  double-charges. Pass a stable key (booking id, request id).

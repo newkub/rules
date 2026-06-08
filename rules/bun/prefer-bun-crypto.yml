@@ -1,0 +1,14 @@
+id: bun-prefer-bun-crypto
+language: TypeScript
+message: Use Bun.password.hash() and Bun.password.verify() for credential hashing
+severity: hint
+rule:
+  kind: call_expression
+  any:
+    - pattern: "bcrypt.hash($$$)"
+    - pattern: "bcrypt.hashSync($$$)"
+    - pattern: "argon2.hash($$$)"
+note: |
+  Bun.password.hash() ships with the runtime and uses
+  argon2id with sensible defaults. No need to add bcrypt
+  or argon2 as a dependency.

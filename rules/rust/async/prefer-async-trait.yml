@@ -1,0 +1,11 @@
+id: rust-prefer-async-trait
+language: Rust
+message: Use #[async_trait] or the new native async fn in trait for async trait methods
+severity: hint
+rule:
+  kind: trait_item
+  pattern: "trait $NAME { async fn $METHOD($$$); }"
+note: |
+  Native async fn in trait is stable on recent compilers.
+  Otherwise, use #[async_trait::async_trait]. Avoid the older
+  manual Box<dyn Future> return types.

@@ -1,0 +1,14 @@
+id: seo-no-duplicate-h1
+language: Html
+message: Each page should have exactly one <h1> heading for SEO and accessibility
+severity: warning
+rule:
+  pattern: "<h1>$$$</h1>"
+  inside:
+    kind: element
+    regex: "(article|main|section)"
+    stopBy: end
+note: |
+  Multiple <h1> tags dilute SEO signals and confuse screen readers.
+  Use a single <h1> as the page title; lower-level headings (h2-h6)
+  should describe content sections.

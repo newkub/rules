@@ -1,0 +1,14 @@
+id: rust-avoid-large-stack-array
+language: Rust
+message: Avoid large arrays on the stack ([T; N] with N>1024) - use Vec<T> or Box<[T]>
+severity: warning
+rule:
+  pattern: "let $X: [$T; $N] = $VAL;"
+  regex: "\\[\\w+;\\s*(\\d+)\\s*\\]"
+  inside:
+    kind: function_item
+    stopBy: end
+note: |
+  Stack-allocated arrays consume a fixed amount of stack space
+  and can overflow on small stacks (worker threads, WASM).
+  Use Vec<T> or Box<[T]> for large buffers.

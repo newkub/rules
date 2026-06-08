@@ -1,0 +1,10 @@
+id: unocss-prefer-utility-classes
+language: Html
+message: Use UnoCSS utility classes instead of arbitrary CSS
+severity: hint
+rule:
+  kind: attribute
+  pattern: "style="
+  not:
+    kind: attribute
+    regex: "class="

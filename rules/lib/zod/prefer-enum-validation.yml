@@ -1,0 +1,11 @@
+id: zod-prefer-enum-validation
+language: TypeScript
+message: Use z.enum() for closed sets of values instead of z.string() + manual check
+severity: hint
+rule:
+  kind: call_expression
+  pattern: "z.union([$$$])"
+note: |
+  z.union([z.literal('a'), z.literal('b')]) is verbose.
+  Use z.enum(['a', 'b']) which gives you a typed value
+  and better error messages.

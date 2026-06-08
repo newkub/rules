@@ -1,0 +1,10 @@
+id: general-no-weak-hash
+language: TypeScript
+message: Weak hash (md5, sha1) - use SHA-256 or Bun.password for credentials
+severity: error
+rule:
+  pattern: "createHash($ALG)"
+  regex: "[\"'](md5|sha-1|sha1)[\"']"
+note: |
+  Universal crypto rule. MD5 and SHA-1 are broken; use SHA-256+
+  for integrity, Bun.password.hash() for credentials (bcrypt/argon2).

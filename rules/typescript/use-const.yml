@@ -1,0 +1,7 @@
+id: use-const
+language: TypeScript
+message: Prefer const over let for variables that are not reassigned
+severity: hint
+rule:
+  kind: variable_declaration
+  regex: "\\blet\\s+\\w+\\s*="

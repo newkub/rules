@@ -1,0 +1,12 @@
+id: security-no-trust-user-id
+language: TypeScript
+message: Don't trust user.id from request body - read it from the authenticated session
+severity: error
+rule:
+  any:
+    - pattern: "const userId = $BODY.userId"
+    - pattern: "const userId = $BODY.user_id"
+    - pattern: "const userId = $BODY.id"
+note: |
+  The authenticated user id must come from the server session, not
+  from the request body. A user submitting userId=X can impersonate X.

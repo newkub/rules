@@ -1,0 +1,15 @@
+id: rust-no-ignored-test
+language: Rust
+message: Remove #[ignore] from tests - either fix the test or move it to a TODO issue
+severity: warning
+rule:
+  kind: attribute_item
+  regex: "#\\[ignore\\b"
+  inside:
+    kind: function_item
+    regex: "#\\[test\\]"
+    stopBy: end
+note: |
+  #[ignore] tests rot quickly - they never run in CI and the
+  reason for ignoring them is forgotten. Either fix the test
+  or remove it.

@@ -1,0 +1,38 @@
+# Build output
+dist
+
+# Dependencies
+node_modules
+
+# Build tools
+.turbo
+.vite
+.swc
+*.tsbuildinfo
+
+# Linter cache
+.eslintcache
+.prettiercache
+.biome/
+.oxlint/
+
+# Logs
+logs
+*.log
+
+# Testing
+coverage
+.nyc_output
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# Test output
+test-output.log

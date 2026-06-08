@@ -1,0 +1,12 @@
+id: drizzle-prefer-in-operator
+language: TypeScript
+message: Use inArray() instead of chained eq() with OR
+severity: hint
+rule:
+  kind: binary_expression
+  regex: "or\\((?:eq\\([^)]+\\)[,\\s]*){3,}"
+note: |
+  `or(eq(a, 1), eq(a, 2), eq(a, 3))` is verbose and
+  generates a non-indexable expression. Use
+  `inArray(a, [1, 2, 3])` which compiles to a single
+  `a IN (...)` clause.

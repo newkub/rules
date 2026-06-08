@@ -1,0 +1,15 @@
+id: rust-require-test-assertion
+language: Rust
+message: A test function should contain at least one assertion (assert! / assert_eq! / assert_matches!)
+severity: warning
+rule:
+  kind: function_item
+  regex: "#\\[test\\]\\s*\\n\\s*(pub\\s+)?fn"
+  not:
+    has:
+      kind: macro_invocation
+      pattern: "assert$$$($$$)"
+      stopBy: end
+note: |
+  Tests that don't assert anything are documentation, not
+  tests. They will silently pass on broken code.

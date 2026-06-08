@@ -1,0 +1,16 @@
+id: seo-require-structured-data-svelte
+language: Html
+message: Marketing pages should include JSON-LD structured data (Organization, BreadcrumbList, FAQPage, Service, etc.)
+severity: hint
+rule:
+  kind: element
+  pattern: "<svelte:head>"
+  has:
+    kind: element
+    pattern: "<script type=\"application/ld+json\""
+    stopBy: end
+note: |
+  Structured data unlocks rich results in Google Search. Public
+  landing, pricing, and provider pages should expose at least one
+  schema.org block via the SeoMeta helpers (generateBreadcrumbSchema,
+  generateServiceSchema, generateFaqSchema).

@@ -1,0 +1,16 @@
+id: api-require-content-type
+language: TypeScript
+message: POST/PUT/PATCH handlers should declare a request content-type or accept JSON
+severity: hint
+rule:
+  kind: function_declaration
+  regex: "export\\s+(?:async\\s+)?function\\s+(POST|PUT|PATCH)"
+  not:
+    has:
+      kind: member_expression
+      regex: "headers\\.get.*content-type|request\\.headers\\.get"
+      stopBy: end
+note: |
+  Reading the Content-Type header lets you reject non-JSON
+  payloads early and produce a 415 Unsupported Media Type
+  response.

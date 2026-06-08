@@ -1,0 +1,6 @@
+id: no-eval
+language: TypeScript
+message: no-eval
+severity: error
+rule:
+  pattern: eval($ARG)

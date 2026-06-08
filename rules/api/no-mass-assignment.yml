@@ -1,0 +1,11 @@
+id: api-no-mass-assignment
+language: TypeScript
+message: Don't spread the request body directly into a Drizzle insert - pick allowed fields explicitly
+severity: error
+rule:
+  kind: assignment_expression
+  regex: "\\{\\s*\\.\\.\\.[a-zA-Z_]+\\s*,\\s*\\.\\.\\.[a-zA-Z_]+\\s*\\}"
+note: |
+  Spreading the entire request body lets clients overwrite
+  fields they shouldn't (role, isAdmin, passwordHash). Pick
+  the allowed fields explicitly: { name, email, phone }.

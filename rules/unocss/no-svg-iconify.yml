@@ -1,0 +1,25 @@
+id: no-svg-use-iconify-tsx
+language: Tsx
+message: Use UnoCSS icon classes from @iconify-json/lucide instead of inline SVG
+severity: warning
+rule:
+  kind: identifier
+  regex: "svg"
+
+---
+id: no-svg-use-iconify-ts
+language: TypeScript
+message: Use UnoCSS icon classes from @iconify-json/lucide instead of inline SVG
+severity: warning
+rule:
+  kind: identifier
+  regex: "svg"
+
+---
+id: no-svg-use-iconify-html
+language: Html
+message: Use UnoCSS icon classes from @iconify-json/lucide instead of inline SVG
+severity: warning
+rule:
+  kind: tag_name
+  regex: "svg"

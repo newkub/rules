@@ -1,0 +1,10 @@
+id: rust-no-unsafe-block
+language: Rust
+message: Minimize use of unsafe blocks - prefer safe abstractions
+severity: warning
+rule:
+  kind: unsafe_block
+note: |
+  Every unsafe block is a maintenance and audit burden. Wrap
+  unsafe code in a small, well-documented safe API and call
+  that API from the rest of the codebase.

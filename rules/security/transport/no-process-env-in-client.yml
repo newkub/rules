@@ -1,0 +1,14 @@
+id: security-no-process-env-in-client
+language: TypeScript
+message: process.env leaks to the client bundle in many frameworks - use $env/static/public or Bun.env
+severity: error
+rule:
+  kind: member_expression
+  regex: "process\\.env"
+  inside:
+    kind: export_statement
+    stopBy: end
+note: |
+  SvelteKit and many bundlers will inline process.env.* into the
+  client bundle. Use $env/static/public (NUXT_PUBLIC_* / PUBLIC_*) for
+  client-readable env, $env/dynamic/private or Bun.env for server-only.

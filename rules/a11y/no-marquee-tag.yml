@@ -1,0 +1,11 @@
+id: a11y-no-marquee-tag
+language: Html
+message: <marquee> is deprecated, inaccessible, and distracting - remove or replace with CSS animation + pause control
+severity: error
+rule:
+  kind: element
+  pattern: "<marquee>$$$</marquee>"
+note: |
+  <marquee> causes motion that users cannot disable, fails WCAG
+  2.2.2, and is removed from HTML5. Use CSS animations with
+  prefers-reduced-motion support instead.

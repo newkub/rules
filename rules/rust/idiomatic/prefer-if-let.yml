@@ -1,0 +1,11 @@
+id: rust-prefer-if-let
+language: Rust
+message: Use if let Some(x) = ... instead of match with a single pattern
+severity: hint
+rule:
+  kind: match_expression
+  pattern: "match $X { Some($Y) => $$$ }"
+note: |
+  'match' with a single Some/Ok arm and no other behavior is
+  usually clearer as 'if let'. Reserve 'match' for multiple
+  arms or when exhaustive handling is required.

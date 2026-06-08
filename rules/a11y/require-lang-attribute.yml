@@ -1,0 +1,14 @@
+id: a11y-require-lang-attribute
+language: Html
+message: <html> element should declare lang="..." for screen readers and search engines
+severity: warning
+rule:
+  kind: element
+  pattern: "<html $$$>"
+  not:
+    kind: attribute
+    regex: "lang="
+note: |
+  The lang attribute enables correct pronunciation, hyphenation,
+  and translation. Use lang="th" for Thai content, lang="en" for
+  English. The bilingual site should switch based on route.

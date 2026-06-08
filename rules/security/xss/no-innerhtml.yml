@@ -1,0 +1,21 @@
+id: security-no-innerhtml-tsx
+language: Tsx
+message: Avoid innerHTML / v-html / @html - direct XSS risk with user content
+severity: error
+rule:
+  any:
+    - pattern: "$$.innerHTML = $$$"
+    - pattern: "$$.innerHTML = `$$$`"
+note: |
+  Setting innerHTML from user-supplied data enables XSS. Use textContent
+  for plain text, or sanitize through DOMPurify if HTML is required.
+  In Svelte use {@html ...} only with sanitized data.
+---
+id: security-no-innerhtml-ts
+language: TypeScript
+message: Avoid innerHTML - direct XSS risk with user content
+severity: error
+rule:
+  any:
+    - pattern: "$$.innerHTML = $$$"
+    - pattern: "$$.innerHTML = `$$$`"

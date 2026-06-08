@@ -1,0 +1,13 @@
+id: seo-require-sitemap-link
+language: Html
+message: Consider linking to /sitemap.xml and /robots.txt from public pages
+severity: hint
+rule:
+  pattern: "<link rel=\"sitemap\""
+  inside:
+    kind: element
+    pattern: "<head>"
+    stopBy: end
+note: |
+  Sitemap links help crawlers discover the full site structure.
+  Usually declared once in app.html rather than per-page.

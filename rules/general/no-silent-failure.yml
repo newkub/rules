@@ -1,0 +1,24 @@
+id: general-no-silent-failure
+language: TypeScript
+message: Catch block must log, rethrow, or return a typed result - don't drop errors silently
+severity: warning
+rule:
+  kind: catch_clause
+  pattern: "catch ($E) { $$$BODY }"
+  not:
+    has:
+      any:
+        - pattern: "console.log($$$)"
+        - pattern: "console.error($$$)"
+        - pattern: "console.warn($$$)"
+        - pattern: "throw $$$"
+        - pattern: "return $$$"
+        - pattern: "$LOGGER.error($$$)"
+        - pattern: "$LOGGER.warn($$$)"
+        - pattern: "logger.error($$$)"
+        - pattern: "logger.warn($$$)"
+      stopBy: end
+note: |
+  An empty-ish catch block is almost always a bug. Surface the
+  error through logging, telemetry, or by returning a typed Result
+  that callers must handle.

@@ -1,0 +1,7 @@
+id: package-json-no-devDependencies-in-prod
+language: Json
+message: devDependencies should not be in production bundle
+severity: hint
+rule:
+  kind: property
+  path: "devDependencies"

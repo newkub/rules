@@ -1,0 +1,11 @@
+id: rust-prefer-format-macro
+language: Rust
+message: Use format!() / write!() macros instead of string concatenation with +
+severity: warning
+rule:
+  kind: binary_expression
+  regex: "[\"']\\s*\\+\\s*[a-zA-Z_]|\\w\\s*\\+\\s*[\"']"
+note: |
+  String + String/String is not idiomatic and incurs extra
+  allocations. Use format!("Hello, {name}!") or write!() into a
+  String/Write buffer.

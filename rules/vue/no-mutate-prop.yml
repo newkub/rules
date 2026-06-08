@@ -1,0 +1,11 @@
+id: vue-no-mutate-prop
+language: TypeScript
+message: Don't mutate props directly - emit an event or use v-model instead
+severity: error
+rule:
+  pattern: "$X.$Y = $Z"
+  regex: "\\bprops\\.\\w+\\s*="
+note: |
+  Mutating a prop in Vue mutates the parent's state and
+  triggers a warning. Emit an event (emit('update:x', val))
+  or accept a v-model for two-way binding.
