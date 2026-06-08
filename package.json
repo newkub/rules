@@ -50,8 +50,8 @@
 		"rules": "./dist/cli.js"
 	},
 	"scripts": {
-		"build": "tsdown",
-		"dev": "tsdown --watch",
+		"build": "bunup",
+		"dev": "bunup --watch",
 		"lint": "biome lint ./src",
 		"format": "biome format --write ./src",
 		"test": "bun test",
@@ -69,9 +69,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.16",
 		"@types/js-yaml": "^4.0.9",
-		"@types/node": "^25.9.2",
-		"ansis": "^4.3.1",
-		"tsdown": "^0.22.2",
+		"bunup": "^0.16.32",
 		"typescript": "^6.0.3"
 	},
 	"peerDependencies": {
